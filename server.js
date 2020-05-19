@@ -9,7 +9,8 @@ connectDB();
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-app.use('/', (req, res) => res.send('Hello'));
+// Routes
+app.use('/api/auth', require('./routes/auth'));
 
 // Listen for requests
 const PORT = process.env.PORT || 5000;

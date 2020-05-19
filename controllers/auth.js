@@ -307,3 +307,24 @@ exports.resetPassword = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.updateInfo = async (req, res) => {
+  // Validate
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name: req.body.name },
+      { new: true }
+    ).select('-password');
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};

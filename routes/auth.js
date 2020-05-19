@@ -10,6 +10,7 @@ const {
   resendEmail,
   forgotPassword,
   resetPassword,
+  updateInfo,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -81,6 +82,16 @@ router.put(
     ).isLength({ min: 6 }),
   ],
   resetPassword
+);
+
+// @route   PUT api/auth/updateinfo
+// @desc    Update info
+// @access  Private
+router.put(
+  '/updateinfo',
+  protect,
+  [check('name', 'Name is required').not().isEmpty()],
+  updateInfo
 );
 
 module.exports = router;

@@ -9,6 +9,7 @@ const {
   getMe,
   resendEmail,
   forgotPassword,
+  resetPassword,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -66,6 +67,20 @@ router.post(
   '/forgotpassword',
   [check('email', 'Please include a valid email').isEmail()],
   forgotPassword
+);
+
+// @route   PUT /api/auth/resetpassword/:resetToken
+// @desc    Reset password
+// @access  Public
+router.put(
+  '/resetpassword/:resetToken',
+  [
+    check(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+  ],
+  resetPassword
 );
 
 module.exports = router;

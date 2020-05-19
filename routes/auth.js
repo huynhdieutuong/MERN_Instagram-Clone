@@ -12,6 +12,7 @@ const {
   resetPassword,
   updateInfo,
   changePassword,
+  changeEmail,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -96,7 +97,7 @@ router.put(
 );
 
 // @route   PUT api/auth/changepassword
-// @desc    Update info
+// @desc    Change password
 // @access  Private
 router.put(
   '/changepassword',
@@ -112,6 +113,16 @@ router.put(
     ).isLength({ min: 6 }),
   ],
   changePassword
+);
+
+// @route   PUT api/auth/changeemail
+// @desc    Change email
+// @access  Private
+router.put(
+  '/changeemail',
+  protect,
+  [check('email', 'Please include a valid email').isEmail()],
+  changeEmail
 );
 
 module.exports = router;

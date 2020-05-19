@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { check } = require('express-validator');
 
-const { register, confirmationEmail } = require('../controllers/auth');
+const { register, confirmationEmail, login } = require('../controllers/auth');
 
 // @route   POST api/auth/register
 // @desc    Register user
@@ -25,5 +25,20 @@ router.post(
 // @desc    Confirmation email
 // @access  Public
 router.get('/confirmation/:token', confirmationEmail);
+
+// @route   POST /api/auth/login
+// @desc    Login user
+// @access  Public
+router.post(
+  '/login',
+  [
+    check('email', 'Please include a valid email').isEmail(),
+    check(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+  ],
+  login
+);
 
 module.exports = router;

@@ -162,3 +162,37 @@ exports.login = async (req, res) => {
 exports.getMe = (req, res) => {
   res.json(req.user);
 };
+
+exports.resendEmail = async (req, res) => {
+  try {
+    // Create a verification token for this user
+    const token = crypto.randomBytes(16).toString('hex');
+
+    await Token.create({
+      user: req.user._id,
+      email: req.user.email,
+      token: crypto.createHash('sha256').update(token).digest('hex'),
+      tokenExpire: Date.now() + 24 * 60 * 60 * 1000,
+    });
+
+    // Send email
+    const tokenUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/api/auth/confirmation/${token}`;
+
+    const message = `Hello ${req.user.name},\n\n Please verify your account by clicking the link below: \n\n ${tokenUrl}`;
+
+    await sendEmail({
+      email: req.user.email,
+      subject: 'Account verification token',
+      message,
+    });
+
+    res.status(200).json({
+      msg: `A verification email has been sent to ${req.user.email}.`,
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};

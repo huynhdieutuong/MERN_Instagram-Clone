@@ -7,9 +7,10 @@ const {
   confirmationEmail,
   login,
   getMe,
+  resendEmail,
 } = require('../controllers/auth');
 
-const { protect } = require('../middlewares/auth');
+const { protect, protectResend } = require('../middlewares/auth');
 
 // @route   POST api/auth/register
 // @desc    Register user
@@ -51,5 +52,10 @@ router.post(
 // @desc    Get logged in user
 // @access  Private
 router.get('/me', protect, getMe);
+
+// @route   GET /api/auth/resend
+// @desc    Resend email to verify account
+// @access  Private
+router.get('/resend', protectResend, resendEmail);
 
 module.exports = router;

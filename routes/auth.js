@@ -8,6 +8,7 @@ const {
   login,
   getMe,
   resendEmail,
+  forgotPassword,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -57,5 +58,14 @@ router.get('/me', protect, getMe);
 // @desc    Resend email to verify account
 // @access  Private
 router.get('/resend', protectResend, resendEmail);
+
+// @route   POST /api/auth/forgotpassword
+// @desc    Forgot password
+// @access  Public
+router.post(
+  '/forgotpassword',
+  [check('email', 'Please include a valid email').isEmail()],
+  forgotPassword
+);
 
 module.exports = router;

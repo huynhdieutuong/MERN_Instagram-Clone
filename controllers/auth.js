@@ -196,3 +196,62 @@ exports.resendEmail = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.forgotPassword = async (req, res) => {
+  // Validate
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  // Check if not user
+  const user = await User.findOne({ email: req.body.email }).select(
+    '-password'
+  );
+  if (!user) {
+    return res.status(404).json({
+      msg: `There is no user with the email address ${req.body.email}`,
+    });
+  }
+
+  // Create password reset token
+  const resetToken = crypto.randomBytes(16).toString('hex');
+
+  // Encrypt token
+  user.resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  // Set expire
+  user.resetPasswordExpire = Date.now() + 24 * 60 * 60 * 1000;
+
+  await user.save();
+
+  // Send email
+  const resetUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/auth/resetpassword/${resetToken}`;
+
+  const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Password reset token',
+      message,
+    });
+
+    res.status(200).json({
+      msg: `A reset password email has been sent to ${user.email}.`,
+    });
+  } catch (err) {
+    console.error(err.message);
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(500).json({ msg: 'Reset email could not be sent' });
+  }
+};

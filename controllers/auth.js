@@ -64,3 +64,53 @@ exports.register = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.confirmationEmail = async (req, res) => {
+  // Get hashed token
+  const confirmationToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  try {
+    // Check token
+    const token = await Token.findOne({
+      token: confirmationToken,
+      tokenExpire: { $gt: Date.now() },
+    });
+
+    if (!token) {
+      return res.status(400).json({ msg: 'Invalid token' });
+    }
+
+    // Update status verified and email
+    const user = await User.findByIdAndUpdate(
+      token.user,
+      { isVerified: true, email: token.email },
+      { new: true }
+    );
+
+    // Delete token
+    await Token.findByIdAndDelete(token._id);
+
+    // Return jsonwebtoken
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      config.get('jwtSecret'),
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};

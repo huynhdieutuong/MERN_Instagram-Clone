@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { check } = require('express-validator');
 
-const { register } = require('../controllers/auth');
+const { register, confirmationEmail } = require('../controllers/auth');
 
 // @route   POST api/auth/register
 // @desc    Register user
@@ -20,5 +20,10 @@ router.post(
   ],
   register
 );
+
+// @route   GET /api/auth/confirmation/:token
+// @desc    Confirmation email
+// @access  Public
+router.get('/confirmation/:token', confirmationEmail);
 
 module.exports = router;

@@ -1,4 +1,7 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
+const path = require('path');
+
 const connectDB = require('./config/db');
 
 const app = express();
@@ -8,11 +11,15 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(fileUpload());
+
+// Static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 
 // Listen for requests
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

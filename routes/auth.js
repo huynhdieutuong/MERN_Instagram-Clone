@@ -13,6 +13,7 @@ const {
   updateInfo,
   changePassword,
   changeEmail,
+  updateAvatar,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -124,5 +125,10 @@ router.put(
   [check('email', 'Please include a valid email').isEmail()],
   changeEmail
 );
+
+// @route   PUT api/auth/updateavatar
+// @desc    Update avatar
+// @access  Private
+router.put('/updateavatar', protect, updateAvatar);
 
 module.exports = router;

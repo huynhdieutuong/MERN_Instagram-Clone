@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const crypto = require('crypto');
+const path = require('path');
 const { validationResult } = require('express-validator');
 
 const sendEmail = require('../utils/sendEmail');
@@ -428,5 +429,50 @@ exports.changeEmail = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+};
+
+exports.updateAvatar = async (req, res) => {
+  if (!req.files) {
+    return res.status(400).json({ msg: 'Please upload an avatar' });
+  }
+
+  let { name, size, mimetype, mv } = req.files.avatar;
+
+  // Make sure the image is a photo
+  if (!mimetype.startsWith('image')) {
+    return res.status(400).json({ msg: 'Please upload an image file' });
+  }
+
+  // Check filesize
+  if (size > 5 * 1024 * 1024) {
+    return res
+      .status(400)
+      .json({ msg: 'Please upload an image less than 5 MB' });
+  }
+
+  // Create custom filename
+  name = `avatar_${req.user._id}_${Date.now()}${path.parse(name).ext}`;
+
+  try {
+    // Upload file
+    mv(`./public/uploads/avatars/${name}`, async (error) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ msg: 'Problem with file upload' });
+      }
+    });
+
+    // Save avatar
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatar: name },
+      { new: true }
+    ).select('-password');
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 };

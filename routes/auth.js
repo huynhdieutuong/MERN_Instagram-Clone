@@ -11,6 +11,7 @@ const {
   forgotPassword,
   resetPassword,
   updateInfo,
+  changePassword,
 } = require('../controllers/auth');
 
 const { protect, protectResend } = require('../middlewares/auth');
@@ -92,6 +93,25 @@ router.put(
   protect,
   [check('name', 'Name is required').not().isEmpty()],
   updateInfo
+);
+
+// @route   PUT api/auth/changepassword
+// @desc    Update info
+// @access  Private
+router.put(
+  '/changepassword',
+  protect,
+  [
+    check(
+      'currentPassword',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+    check(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+  ],
+  changePassword
 );
 
 module.exports = router;

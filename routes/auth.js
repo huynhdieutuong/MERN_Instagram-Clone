@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
-
 const { check } = require('express-validator');
 
-const { register, confirmationEmail, login } = require('../controllers/auth');
+const {
+  register,
+  confirmationEmail,
+  login,
+  getMe,
+} = require('../controllers/auth');
+
+const { protect } = require('../middlewares/auth');
 
 // @route   POST api/auth/register
 // @desc    Register user
@@ -40,5 +46,10 @@ router.post(
   ],
   login
 );
+
+// @route   GET /api/auth/me
+// @desc    Get logged in user
+// @access  Private
+router.get('/me', protect, getMe);
 
 module.exports = router;

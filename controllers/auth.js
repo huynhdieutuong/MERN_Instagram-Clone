@@ -158,3 +158,7 @@ exports.login = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.getMe = (req, res) => {
+  res.json(req.user);
+};

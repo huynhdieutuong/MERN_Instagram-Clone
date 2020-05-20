@@ -12,6 +12,7 @@ const {
   deletePost,
   likePost,
   commentPost,
+  delCommentPost,
 } = require('../controllers/posts');
 
 // @route   POST api/posts
@@ -53,6 +54,17 @@ router.put(
   checkObjectId('id'),
   [check('text', 'Text is required').not().isEmpty()],
   commentPost
+);
+
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Delete comment on a post
+// @access  Private
+router.delete(
+  '/comment/:id/:comment_id',
+  protect,
+  checkObjectId('id'),
+  checkObjectId('comment_id'),
+  delCommentPost
 );
 
 module.exports = router;

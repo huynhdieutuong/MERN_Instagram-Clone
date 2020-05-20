@@ -108,3 +108,34 @@ exports.deletePost = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+exports.likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    // Check if the post has already been liked
+    const liked = post.likes.find(
+      (like) => like.user.toString() === req.user.id
+    );
+
+    if (liked) {
+      post.likes = post.likes.filter(
+        (like) => like.user.toString() !== req.user.id
+      );
+    } else {
+      post.likes.unshift({ user: req.user.id });
+    }
+
+    await post.save();
+
+    res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};

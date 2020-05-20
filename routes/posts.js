@@ -5,7 +5,12 @@ const { check } = require('express-validator');
 const { protect } = require('../middlewares/auth');
 const checkObjectId = require('../middlewares/checkObjectId');
 
-const { createPost, getPosts, getPost } = require('../controllers/posts');
+const {
+  createPost,
+  getPosts,
+  getPost,
+  deletePost,
+} = require('../controllers/posts');
 
 // @route   POST api/posts
 // @desc    Create a post
@@ -26,5 +31,10 @@ router.get('/', getPosts);
 // @desc    Get post by ID
 // @access  Public
 router.get('/:id', checkObjectId('id'), getPost);
+
+// @route   DELETE api/posts/:id
+// @desc    Delete post
+// @access  Private
+router.delete('/:id', protect, checkObjectId('id'), deletePost);
 
 module.exports = router;

@@ -127,12 +127,44 @@ exports.likePost = async (req, res) => {
         (like) => like.user.toString() !== req.user.id
       );
     } else {
-      post.likes.unshift({ user: req.user.id });
+      post.likes.push({ user: req.user.id });
     }
 
     await post.save();
 
     res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};
+
+exports.commentPost = async (req, res) => {
+  // Validate
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    // Add new comment
+    post.comments.push({
+      user: req.user.id,
+      text: req.body.text,
+      name: req.user.name,
+      avatar: req.user.avatar,
+    });
+
+    await post.save();
+
+    res.json(post.comments);
   } catch (err) {
     console.error(err.message);
 

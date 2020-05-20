@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/posts', require('./routes/posts'));
+app.use('/api/notifications', require('./routes/notifications'));
 
 // Listen for requests
 const PORT = process.env.PORT || 6000;

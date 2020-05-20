@@ -2,6 +2,7 @@ const path = require('path');
 const { validationResult } = require('express-validator');
 
 const Post = require('../models/Post');
+const Notification = require('../models/Notification');
 
 // @route   POST api/posts
 // @desc    Create a post
@@ -128,6 +129,16 @@ exports.likePost = async (req, res) => {
       );
     } else {
       post.likes.push({ user: req.user.id });
+
+      // Add Notification
+      if (post.user.toString() !== req.user.id) {
+        await Notification.create({
+          owner: post.user,
+          guest: req.user.id,
+          post: post.id,
+          type: 'like',
+        });
+      }
     }
 
     await post.save();
@@ -163,6 +174,16 @@ exports.commentPost = async (req, res) => {
     });
 
     await post.save();
+
+    if (post.user.toString() !== req.user.id) {
+      // Add Notification
+      await Notification.create({
+        owner: post.user,
+        guest: req.user.id,
+        post: post.id,
+        type: 'comment',
+      });
+    }
 
     res.json(post.comments);
   } catch (err) {

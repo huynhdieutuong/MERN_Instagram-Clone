@@ -1,15 +1,23 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Logo from '../../images/loginLogo.png';
 
-const Login = (props) => {
+import { setAlert } from '../../redux/actions/alerts';
+
+const Login = ({ setAlert }) => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setAlert('success', 'Success Login');
+  };
+
   return (
     <Fragment>
       <div className='login__box'>
         <img src={Logo} alt='logo' className='login__logo' />
-        <form className='login__form'>
+        <form className='login__form' onSubmit={onSubmit}>
           <input type='email' name='email' placeholder='Email' />
           <input type='password' name='password' placeholder='Password' />
           <input type='submit' value='Log in' />
@@ -30,6 +38,8 @@ const Login = (props) => {
   );
 };
 
-Login.propTypes = {};
+Login.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
 
-export default Login;
+export default connect(null, { setAlert })(Login);

@@ -10,7 +10,27 @@ import {
   LOGIN_FAIL,
   SENDMAIL_SUCCESS,
   SENDMAIL_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
 } from '../types';
+
+import setAuthToken from '../../utils/setAuthToken';
+
+// Load User
+export const loadUser = () => async (dispatch) => {
+  setAuthToken(localStorage.getItem('token'));
+
+  try {
+    const res = await axios.get('/api/auth/me');
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: AUTH_ERROR });
+  }
+};
 
 // Register User
 export const register = (name, email, password) => async (dispatch) => {
@@ -57,6 +77,8 @@ export const confirmationEmail = (token) => async (dispatch) => {
       type: CONFIRMATION_SUCCESS,
       payload: res.data,
     });
+
+    dispatch(loadUser());
   } catch (err) {
     dispatch({
       type: CONFIRMATION_FAIL,
@@ -86,6 +108,8 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -145,6 +169,8 @@ export const resetPassword = (token, password) => async (dispatch) => {
       type: CONFIRMATION_SUCCESS,
       payload: res.data,
     });
+
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 

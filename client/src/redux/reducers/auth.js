@@ -6,6 +6,8 @@ import {
   CONFIRMATION_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SENDMAIL_SUCCESS,
+  SENDMAIL_FAIL,
 } from '../types';
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   loading: false,
   user: null,
   error: null,
+  isSendEmail: false,
 };
 
 export default function (state = initialState, action) {
@@ -42,6 +45,18 @@ export default function (state = initialState, action) {
         loading: false,
         user: null,
         error: payload,
+      };
+    case SENDMAIL_SUCCESS:
+      return {
+        ...state,
+        isSendEmail: true,
+        loading: false,
+      };
+    case SENDMAIL_FAIL:
+      return {
+        ...state,
+        isSendEmail: false,
+        loading: false,
       };
     case LOADING:
       return {

@@ -6,15 +6,14 @@ import { Spin, Alert } from 'antd';
 
 import Logo from '../../images/loginLogo.png';
 
-import { login } from '../../redux/actions/auth';
+import { forgotPassword } from '../../redux/actions/auth';
 
-const Login = ({ auth: { loading, isAuthenticated }, login }) => {
+const ForgotPassword = ({ auth: { loading, isSendEmail }, forgotPassword }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +21,7 @@ const Login = ({ auth: { loading, isAuthenticated }, login }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    login(email, password);
+    forgotPassword(email);
   };
 
   return (
@@ -33,8 +32,12 @@ const Login = ({ auth: { loading, isAuthenticated }, login }) => {
           <div>
             <Spin />
           </div>
-        ) : isAuthenticated ? (
-          <Alert message='Login Success' type='success' />
+        ) : isSendEmail ? (
+          <Alert
+            message='Email Sent'
+            description={`A reset password email has been sent to ${email}`}
+            type='success'
+          />
         ) : (
           <form className='login__form' onSubmit={onSubmit}>
             <input
@@ -45,25 +48,9 @@ const Login = ({ auth: { loading, isAuthenticated }, login }) => {
               onChange={onChange}
               required
             />
-            <input
-              type='password'
-              name='password'
-              placeholder='Password'
-              value={password}
-              onChange={onChange}
-              required
-            />
-            <input type='submit' value='Log in' />
+            <input type='submit' value='Submit' />
           </form>
         )}
-        <span className='login__divider'>or</span>
-        <Link to='#!' className='login__link'>
-          <i className='fa fa-money'></i>
-          Log in with Facebook
-        </Link>
-        <Link to='/forgotpassword' className='login__link login__link--small'>
-          Forgot password ?
-        </Link>
       </div>
       <div className='login__box'>
         <span>Don't have an account?</span> <Link to='/register'>Sign up</Link>
@@ -72,12 +59,12 @@ const Login = ({ auth: { loading, isAuthenticated }, login }) => {
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+ForgotPassword.propTypes = {
+  forgotPassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);

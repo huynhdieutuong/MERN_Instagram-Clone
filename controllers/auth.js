@@ -215,7 +215,7 @@ exports.forgotPassword = async (req, res) => {
   );
   if (!user) {
     return res.status(404).json({
-      msg: `There is no user with the email address ${req.body.email}`,
+      errors: [{ msg: `Email ${req.body.email} not exists` }],
     });
   }
 
@@ -234,11 +234,13 @@ exports.forgotPassword = async (req, res) => {
   await user.save();
 
   // Send email
-  const resetUrl = `${req.protocol}://${req.get(
+  const resetUrl = `<a href="${req.protocol}://${req.get(
     'host'
-  )}/api/auth/resetpassword/${resetToken}`;
+  )}/resetpassword/${resetToken}">${req.protocol}://${req.get(
+    'host'
+  )}/resetpassword/${resetToken}</a>`;
 
-  const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+  const message = `<p>You are receiving this email because you (or someone else) has requested the reset of a password.</p><p>To change your account's password by clicking the link below:</p><p>${resetUrl}</p>`;
 
   try {
     await sendEmail({
@@ -257,7 +259,9 @@ exports.forgotPassword = async (req, res) => {
     user.resetPasswordExpire = undefined;
     await user.save();
 
-    res.status(500).json({ msg: 'Reset email could not be sent' });
+    res
+      .status(500)
+      .json({ errors: [{ msg: 'Reset email could not be sent' }] });
   }
 };
 

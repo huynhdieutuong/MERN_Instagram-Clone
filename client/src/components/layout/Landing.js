@@ -7,6 +7,7 @@ import AndroidLogo from '../../images/android.png';
 
 import Login from '../auth/Login';
 import Register from '../auth/Register';
+import ForgotPassword from '../auth/ForgotPassword';
 
 const Landing = (props) => {
   return (
@@ -18,6 +19,7 @@ const Landing = (props) => {
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
+          <Route exact path='/forgotpassword' component={ForgotPassword} />
         </Switch>
         <div className='login__box--transparent'>
           <span>Get the app.</span>

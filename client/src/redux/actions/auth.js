@@ -6,6 +6,8 @@ import {
   REGISTER_FAIL,
   CONFIRMATION_SUCCESS,
   CONFIRMATION_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from '../types';
 
 // Register User
@@ -57,6 +59,40 @@ export const confirmationEmail = (token) => async (dispatch) => {
     dispatch({
       type: CONFIRMATION_FAIL,
       payload: err.response.data.msg,
+    });
+  }
+};
+
+// Login User
+export const login = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    dispatch({ type: LOADING });
+
+    const res = await axios.post(
+      '/api/auth/login',
+      { email, password },
+      config
+    );
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL,
     });
   }
 };

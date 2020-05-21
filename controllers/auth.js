@@ -131,13 +131,13 @@ exports.login = async (req, res) => {
     // Check for user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
+      return res.status(401).json({ errors: [{ msg: 'Invalid credentials' }] });
     }
 
     // Check for password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
+      return res.status(401).json({ errors: [{ msg: 'Invalid credentials' }] });
     }
 
     // Return jsonwebtoken

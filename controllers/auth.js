@@ -45,11 +45,13 @@ exports.register = async (req, res) => {
     });
 
     // Send email
-    const tokenUrl = `${req.protocol}://${req.get(
+    const tokenUrl = `<a href="${req.protocol}://${req.get(
       'host'
-    )}/api/auth/confirmation/${token}`;
+    )}/confirmation/${token}">${req.protocol}://${req.get(
+      'host'
+    )}/confirmation/${token}</a>`;
 
-    const message = `Hello ${user.name},\n\n Please verify your account by clicking the link below: \n\n ${tokenUrl}`;
+    const message = `<p>Hello ${user.name},</p><p>Please verify your account by clicking the link below:</p><p>${tokenUrl}</p>`;
 
     await sendEmail({
       email: user.email,
@@ -177,11 +179,13 @@ exports.resendEmail = async (req, res) => {
     });
 
     // Send email
-    const tokenUrl = `${req.protocol}://${req.get(
+    const tokenUrl = `<a href="${req.protocol}://${req.get(
       'host'
-    )}/api/auth/confirmation/${token}`;
+    )}/confirmation/${token}">${req.protocol}://${req.get(
+      'host'
+    )}/confirmation/${token}</a>`;
 
-    const message = `Hello ${req.user.name},\n\n Please verify your account by clicking the link below: \n\n ${tokenUrl}`;
+    const message = `<p>Hello ${user.name},</p><p>Please verify your account by clicking the link below:</p><p>${tokenUrl}</p>`;
 
     await sendEmail({
       email: req.user.email,

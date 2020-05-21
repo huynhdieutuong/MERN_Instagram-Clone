@@ -10,6 +10,7 @@ import store from './redux/store';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
 import Alerts from './components/layout/Alerts';
+import Confirmation from './components/auth/Confirmation';
 
 const App = () => (
   <Provider store={store}>
@@ -17,6 +18,7 @@ const App = () => (
       <Alerts />
 
       <Switch>
+        <Route exact path='/confirmation/:token' component={Confirmation} />
         <Route component={Landing} />
       </Switch>
 

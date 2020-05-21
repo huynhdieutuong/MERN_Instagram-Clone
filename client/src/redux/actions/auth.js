@@ -123,3 +123,38 @@ export const forgotPassword = (email) => async (dispatch) => {
     dispatch({ type: SENDMAIL_FAIL });
   }
 };
+
+// Reset Password
+export const resetPassword = (token, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    dispatch({ type: LOADING });
+
+    const res = await axios.put(
+      `/api/auth/resetpassword/${token}`,
+      { password },
+      config
+    );
+
+    dispatch({
+      type: CONFIRMATION_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+
+    dispatch({
+      type: CONFIRMATION_FAIL,
+      payload: err.response.data.msg,
+    });
+  }
+};

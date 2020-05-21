@@ -285,7 +285,7 @@ exports.resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ msg: 'Invalid token' });
+      return res.status(400).json({ errors: [{ msg: 'Invalid token' }] });
     }
 
     // Set new password

@@ -32,7 +32,7 @@ const Navbar = ({ auth: { user } }) => {
           <li className='navigation__list-item'>
             <Link to='/profile' className='navigation__link'>
               <img
-                src={user.avatar}
+                src={`/uploads/avatars/${user.avatar}`}
                 alt='avatar'
                 className='navigation__avatar'
               />

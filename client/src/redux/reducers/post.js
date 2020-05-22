@@ -1,4 +1,10 @@
-import { GET_MYPOSTS, GET_MYPOSTS_ERROR } from '../types';
+import {
+  GET_MYPOSTS,
+  GET_MYPOSTS_ERROR,
+  GET_POSTS,
+  GET_POSTS_ERROR,
+  UPDATE_LIKES,
+} from '../types';
 
 const initialState = {
   myposts: [],
@@ -18,11 +24,30 @@ export default function (state = initialState, action) {
         loading: false,
         myposts: payload,
       };
+    case GET_POSTS:
+      return {
+        ...state,
+        loading: false,
+        posts: payload,
+      };
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === payload.id ? { ...post, likes: payload.likes } : post
+        ),
+      };
     case GET_MYPOSTS_ERROR:
       return {
         ...state,
         loading: false,
         myposts: [],
+      };
+    case GET_POSTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        posts: [],
       };
     default:
       return state;

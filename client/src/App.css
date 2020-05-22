@@ -512,7 +512,7 @@ main {
 }
 
 .photo > img {
-  max-width: 100%;
+  width: 100%;
 }
 
 .photo .photo__info {
@@ -1006,4 +1006,28 @@ body {
 .navigation__avatar {
   width: 25px;
   border-radius: 50%;
+}
+
+.photo__add-comment-container textarea {
+  overflow: hidden;
+  line-height: 1;
+}
+
+.photo__add-comment-container button {
+  border: none;
+  padding: 0;
+  color: #0095f6;
+  background: none;
+  font-weight: 600;
+  opacity: 0.3;
+  outline: none;
+  cursor: pointer;
+}
+
+.photo__add-comment-container .opacity1 {
+  opacity: 1;
+}
+
+.red-heart {
+  color: rgb(237, 73, 86);
 }

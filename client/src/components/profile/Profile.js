@@ -25,7 +25,7 @@ const Profile = ({
     <main id='profile'>
       <header className='profile__header'>
         <div className='profile__column'>
-          <img src={avatar} alt='avatar' />
+          <img src={`uploads/avatars/${avatar}`} alt='avatar' />
         </div>
         <div className='profile__column'>
           <div className='profile__title'>

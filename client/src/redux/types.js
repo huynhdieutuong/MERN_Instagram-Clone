@@ -19,3 +19,6 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 // Post
 export const GET_MYPOSTS = 'GET_MYPOSTS';
 export const GET_MYPOSTS_ERROR = 'GET_MYPOSTS_ERROR';
+export const GET_POSTS = 'GET_POSTS';
+export const GET_POSTS_ERROR = 'GET_POSTS_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES';

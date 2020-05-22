@@ -16,21 +16,25 @@ exports.createPost = async (req, res) => {
 
   // Validate image
   if (!req.files) {
-    return res.status(400).json({ msg: 'Please upload an image' });
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please upload an image' }] });
   }
 
   let { name, size, mimetype, mv } = req.files.image;
 
   // Make sure the image is a photo
   if (!mimetype.startsWith('image')) {
-    return res.status(400).json({ msg: 'Please upload an image file' });
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please upload an image file' }] });
   }
 
   // Check filesize
   if (size > 5 * 1024 * 1024) {
     return res
       .status(400)
-      .json({ msg: 'Please upload an image less than 5 MB' });
+      .json({ errors: [{ msg: 'Please upload an image less than 5 MB' }] });
   }
 
   // Create custom filename
@@ -41,7 +45,9 @@ exports.createPost = async (req, res) => {
     mv(`./public/uploads/photos/${name}`, async (error) => {
       if (error) {
         console.error(error);
-        return res.status(500).json({ msg: 'Problem with file upload' });
+        return res
+          .status(500)
+          .json({ errors: [{ msg: 'Problem with file upload' }] });
       }
     });
 
@@ -62,7 +68,10 @@ exports.createPost = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort('-date');
+    const posts = await Post.find().sort('-date').populate({
+      path: 'user',
+      select: 'name avatar',
+    });
 
     res.json(posts);
   } catch (err) {
@@ -89,7 +98,7 @@ exports.getPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     res.json(post);
@@ -105,11 +114,11 @@ exports.deletePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorized' });
+      return res.status(401).json({ errors: [{ msg: 'User not authorized' }] });
     }
 
     await post.remove();
@@ -127,7 +136,7 @@ exports.likePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     // Check if the post has already been liked
@@ -174,7 +183,7 @@ exports.commentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     // Add new comment
@@ -213,7 +222,7 @@ exports.delCommentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     // Check if not comment
@@ -222,12 +231,16 @@ exports.delCommentPost = async (req, res) => {
     );
 
     if (!commentExists) {
-      return res.status(400).json({ msg: 'Comment does not exists' });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'Comment does not exists' }] });
     }
-
+    {
+      errors: [{ msg: 'Comment does not exists' }];
+    }
     // Check user authorized
     if (commentExists.user.toString() !== req.user.id) {
-      return res.status(400).json({ msg: 'User not authorized' });
+      return res.status(400).json({ errors: [{ msg: 'User not authorized' }] });
     }
 
     // Remove comment and save

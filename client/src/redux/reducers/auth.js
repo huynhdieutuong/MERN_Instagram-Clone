@@ -16,6 +16,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: false,
+  loading2: true,
   user: null,
   error: null,
   isSendEmail: false,
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
+        loading2: false,
         user: payload,
       };
     case REGISTER_SUCCESS:
@@ -41,6 +43,7 @@ export default function (state = initialState, action) {
         token: payload.token,
         isAuthenticated: true,
         loading: false,
+        loading2: false,
         error: null,
       };
     case REGISTER_FAIL:
@@ -53,6 +56,7 @@ export default function (state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
+        loading2: false,
         user: null,
         error: payload,
       };
@@ -61,12 +65,14 @@ export default function (state = initialState, action) {
         ...state,
         isSendEmail: true,
         loading: false,
+        loading2: false,
       };
     case SENDMAIL_FAIL:
       return {
         ...state,
         isSendEmail: false,
         loading: false,
+        loading2: false,
       };
     case LOADING:
       return {

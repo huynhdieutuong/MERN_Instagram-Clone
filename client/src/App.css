@@ -604,7 +604,6 @@ main {
   border-radius: 50%;
   transform-style: preserve-3d;
   transition: transform 0.5s linear;
-  animation: rotateLynn 1s linear infinite;
 }
 
 @keyframes rotateLynn {
@@ -949,4 +948,13 @@ main {
   .edit-profile__header .edit-profile__avatar-container {
     width: 0;
   }
+}
+
+.spinner {
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  margin: 20px 0;
+  height: 85vh;
 }

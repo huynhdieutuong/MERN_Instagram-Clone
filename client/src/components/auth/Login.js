@@ -58,8 +58,7 @@ const Login = ({ auth: { loading, isAuthenticated }, login }) => {
         )}
         <span className='login__divider'>or</span>
         <Link to='#!' className='login__link'>
-          <i className='fa fa-money'></i>
-          Log in with Facebook
+          <i className='fab fa-facebook-f'></i> Log in with Facebook
         </Link>
         <Link to='/forgotpassword' className='login__link login__link--small'>
           Forgot password ?

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Logo from '../../images/loginLogo.png';
 
-const Navbar = (props) => {
+const Navbar = ({ auth: { user } }) => {
   return (
     <nav className='navigation'>
       <div className='navigation__column'>
@@ -30,7 +31,11 @@ const Navbar = (props) => {
           </li>
           <li className='navigation__list-item'>
             <Link to='/profile' className='navigation__link'>
-              <i className='far fa-user fa-lg'></i>
+              <img
+                src={user.avatar}
+                alt='avatar'
+                className='navigation__avatar'
+              />
             </Link>
           </li>
         </ul>
@@ -39,6 +44,12 @@ const Navbar = (props) => {
   );
 };
 
-Navbar.propTypes = {};
+Navbar.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Navbar);

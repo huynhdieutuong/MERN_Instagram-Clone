@@ -8,6 +8,7 @@ const checkObjectId = require('../middlewares/checkObjectId');
 const {
   createPost,
   getPosts,
+  getPostsMe,
   getPost,
   deletePost,
   likePost,
@@ -29,6 +30,11 @@ router.post(
 // @desc    Get all posts
 // @access  Public
 router.get('/', getPosts);
+
+// @route   GET api/posts/me
+// @desc    Get all posts of user
+// @access  Private
+router.get('/me', protect, getPostsMe);
 
 // @route   GET api/posts/:id
 // @desc    Get post by ID

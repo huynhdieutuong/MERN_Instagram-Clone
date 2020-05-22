@@ -143,6 +143,8 @@ body {
 
 main {
   animation: fadeInMain 0.5s linear;
+  background-color: rgb(250, 250, 250);
+  padding-top: 60px;
 }
 
 @keyframes fadeInMain {
@@ -290,15 +292,20 @@ main {
 
 /* Footer */
 .footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
-  max-width: 900px;
-  margin: 30px auto;
+  padding: 30px;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 600;
+  background-color: rgb(250, 250, 250);
+}
+
+.footer div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
 }
 
 .footer .footer__list {
@@ -329,7 +336,6 @@ main {
   align-items: center;
   justify-content: space-between;
   padding: 0 100px;
-  margin-bottom: 60px;
 }
 
 .navigation .navigation__column:first-child img {
@@ -601,6 +607,7 @@ main {
 }
 
 .profile__column:first-child img {
+  width: 150px;
   border-radius: 50%;
   transform-style: preserve-3d;
   transition: transform 0.5s linear;
@@ -702,12 +709,21 @@ main {
   max-width: 100%;
 }
 
+.profile__photo .profile__photo-background {
+  display: inline-block;
+  width: 100%;
+  height: 300px;
+  background-color: white;
+  background-size: cover;
+  background-position: center;
+}
+
 .profile__photo .profile__photo-overlay {
   position: absolute;
   top: 0;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: 100%;
+  height: 99%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -957,4 +973,37 @@ main {
   padding: 30px 50px;
   margin: 20px 0;
   height: 85vh;
+}
+
+.no-post {
+  display: flex;
+  width: 100%;
+}
+
+.no-post .left img {
+  width: 380px;
+}
+
+.no-post .right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.no-post .right h2 {
+  font-size: 18px;
+}
+
+html,
+#root,
+body {
+  background-color: rgb(250, 250, 250);
+}
+
+.navigation__avatar {
+  width: 25px;
+  border-radius: 50%;
 }

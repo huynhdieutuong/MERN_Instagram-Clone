@@ -72,6 +72,18 @@ exports.getPosts = async (req, res) => {
   }
 };
 
+exports.getPostsMe = async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.user.id }).sort('-date');
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};
+
 exports.getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);

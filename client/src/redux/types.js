@@ -15,3 +15,7 @@ export const SENDMAIL_SUCCESS = 'SENDMAIL_SUCCESS';
 export const SENDMAIL_FAIL = 'SENDMAIL_FAIL';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+// Post
+export const GET_MYPOSTS = 'GET_MYPOSTS';
+export const GET_MYPOSTS_ERROR = 'GET_MYPOSTS_ERROR';

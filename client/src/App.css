@@ -1031,3 +1031,21 @@ body {
 .red-heart {
   color: rgb(237, 73, 86);
 }
+
+.remove-comment {
+  color: rgb(237, 73, 86);
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.remove-comment:hover {
+  opacity: 1;
+}
+
+.photo__comment {
+  display: flex;
+}
+
+.photo__comment > span {
+  flex-grow: 1;
+}

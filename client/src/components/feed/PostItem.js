@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { addLike } from '../../redux/actions/post';
 
 import AddComment from './AddComment';
+import CommnetItem from './CommentItem';
 
 const PostItem = ({
   post: { _id, user, text, image, likes, comments, date },
@@ -54,10 +55,7 @@ const PostItem = ({
         <ul className='photo__comments'>
           {comments.length > 0 &&
             comments.map((comment) => (
-              <li className='photo__comment' key={comment._id}>
-                <span className='photo__comment-author'>{comment.name}</span>{' '}
-                {comment.text}
-              </li>
+              <CommnetItem key={comment._id} comment={comment} postId={_id} />
             ))}
         </ul>
         <span className='photo__time-ago'>

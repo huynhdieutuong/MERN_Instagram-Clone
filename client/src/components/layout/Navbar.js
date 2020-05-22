@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Logo from '../../images/loginLogo.png';
+import Spinner from './Spinner';
 
 const Navbar = ({ auth: { user } }) => {
+  if (!user) return <Spinner />;
+
   return (
     <nav className='navigation'>
       <div className='navigation__column'>

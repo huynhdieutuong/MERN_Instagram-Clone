@@ -77,3 +77,20 @@ export const addComment = (id, text) => async (dispatch) => {
     }
   }
 };
+
+export const removeComment = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
+
+    dispatch({
+      type: UPDATE_COMMENTS,
+      payload: { id: postId, comments: res.data },
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+  }
+};

@@ -4,6 +4,7 @@ import {
   GET_POSTS,
   GET_POSTS_ERROR,
   UPDATE_LIKES,
+  UPDATE_COMMENTS,
 } from '../types';
 
 const initialState = {
@@ -35,6 +36,15 @@ export default function (state = initialState, action) {
         ...state,
         posts: state.posts.map((post) =>
           post._id === payload.id ? { ...post, likes: payload.likes } : post
+        ),
+      };
+    case UPDATE_COMMENTS:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === payload.id
+            ? { ...post, comments: payload.comments }
+            : post
         ),
       };
     case GET_MYPOSTS_ERROR:

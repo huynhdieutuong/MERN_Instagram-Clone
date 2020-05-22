@@ -7,6 +7,7 @@ import {
   GET_POSTS,
   GET_POSTS_ERROR,
   UPDATE_LIKES,
+  UPDATE_COMMENTS,
 } from '../types';
 
 export const getMyPosts = () => async (dispatch) => {
@@ -42,6 +43,31 @@ export const addLike = (id) => async (dispatch) => {
     dispatch({
       type: UPDATE_LIKES,
       payload: { id, likes: res.data },
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+  }
+};
+
+export const addComment = (id, text) => async (dispatch) => {
+  text = text.trim() === '' ? null : text.trim();
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put(`/api/posts/comment/${id}`, { text }, config);
+
+    dispatch({
+      type: UPDATE_COMMENTS,
+      payload: { id, comments: res.data },
     });
   } catch (err) {
     const errors = err.response.data.errors;

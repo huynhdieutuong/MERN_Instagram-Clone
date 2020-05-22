@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const AddComment = (props) => {
+import { addComment } from '../../redux/actions/post';
+
+const AddComment = ({ postId, addComment }) => {
   const [comment, setComment] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(comment);
+    addComment(postId, comment);
     setComment('');
   };
 
@@ -29,6 +32,9 @@ const AddComment = (props) => {
   );
 };
 
-AddComment.propTypes = {};
+AddComment.propTypes = {
+  addComment: PropTypes.func.isRequired,
+  postId: PropTypes.string.isRequired,
+};
 
-export default AddComment;
+export default connect(null, { addComment })(AddComment);

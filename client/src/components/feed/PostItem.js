@@ -63,7 +63,7 @@ const PostItem = ({
         <span className='photo__time-ago'>
           <Moment fromNow>{date}</Moment>
         </span>
-        <AddComment />
+        <AddComment postId={_id} />
       </div>
     </div>
   );

@@ -22,3 +22,4 @@ export const GET_MYPOSTS_ERROR = 'GET_MYPOSTS_ERROR';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_ERROR = 'GET_POSTS_ERROR';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';

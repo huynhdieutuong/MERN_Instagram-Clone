@@ -2,6 +2,7 @@ import {
   GET_NOTIFICATIONS,
   NOTIFICATION_ERROR,
   UPDATE_NOTIFICATIONS,
+  CLEAR_NOTIFICATION,
 } from '../types';
 
 const initialState = {
@@ -26,6 +27,14 @@ export default function (state = initialState, action) {
         loading: false,
         notifications: state.notifications.map((notification) =>
           notification._id === payload._id ? payload : notification
+        ),
+      };
+    case CLEAR_NOTIFICATION:
+      return {
+        ...state,
+        loading: false,
+        notifications: state.notifications.filter(
+          (notification) => notification._id !== payload
         ),
       };
     case NOTIFICATION_ERROR:

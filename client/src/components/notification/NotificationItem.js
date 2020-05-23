@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
-import { markReadNotification } from '../../redux/actions/notification';
+import {
+  markReadNotification,
+  clearNotification,
+} from '../../redux/actions/notification';
 
 const NotificationItem = ({
   notification: { guest, post, type, date, isRead, _id },
   markReadNotification,
+  clearNotification,
 }) => {
   return (
-    <li className={!isRead && 'not-read'}>
+    <li className={!isRead ? 'not-read' : ''}>
       <a href='#!'>
         <img src={`/uploads/avatars/${guest.avatar}`} alt='avatar guest' />
         <span>
@@ -23,7 +27,11 @@ const NotificationItem = ({
         </span>
         <img src={`/uploads/photos/${post.image}`} alt='your post' />
         <div className='actions'>
-          <i title='Clear This' className='fas fa-times'></i>
+          <i
+            title='Clear This'
+            className='fas fa-times'
+            onClick={() => clearNotification(_id)}
+          ></i>
           <i
             title='Mark as Read'
             className='far fa-dot-circle'
@@ -37,6 +45,9 @@ const NotificationItem = ({
 
 NotificationItem.propTypes = {
   markReadNotification: PropTypes.func.isRequired,
+  clearNotification: PropTypes.func.isRequired,
 };
 
-export default connect(null, { markReadNotification })(NotificationItem);
+export default connect(null, { markReadNotification, clearNotification })(
+  NotificationItem
+);

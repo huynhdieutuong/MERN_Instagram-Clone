@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,7 +7,18 @@ import Logo from '../../images/loginLogo.png';
 import Spinner from './Spinner';
 import Notifications from '../notification/Notifications';
 
-const Navbar = ({ auth: { user } }) => {
+import { getNotifications } from '../../redux/actions/notification';
+
+const Navbar = ({
+  auth: { user },
+  notification: { loading, notifications },
+  getNotifications,
+}) => {
+  useEffect(() => {
+    getNotifications();
+    // eslint-disable-next-line
+  }, []);
+
   const [toggleNotifications, setToggle] = useState(false);
   const [current, setCurrent] = useState(
     localStorage.getItem('currentMenu', '')
@@ -23,7 +34,15 @@ const Navbar = ({ auth: { user } }) => {
     }
   };
 
-  if (!user) return <Spinner />;
+  // Count unread notification
+  const count = notifications.reduce((sum, notification) => {
+    if (!notification.isRead) {
+      return sum + 1;
+    }
+    return sum;
+  }, 0);
+
+  if (!user || loading) return <Spinner />;
 
   return (
     <nav className='navigation'>
@@ -54,6 +73,7 @@ const Navbar = ({ auth: { user } }) => {
             className='navigation__list-item navigation-notification'
             onClick={() => onChangeCurrent('notification')}
           >
+            {count > 0 && <div className='number-unread'>{count}</div>}
             <Link to='#!' className='navigation__link'>
               {current === 'notification' ? (
                 <i className='fas fa-heart fa-lg'></i>
@@ -87,10 +107,13 @@ const Navbar = ({ auth: { user } }) => {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
+  notification: PropTypes.object.isRequired,
+  getNotifications: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  notification: state.notification,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { getNotifications })(Navbar);

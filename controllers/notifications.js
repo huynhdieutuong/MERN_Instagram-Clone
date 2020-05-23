@@ -2,9 +2,16 @@ const Notification = require('../models/Notification');
 
 exports.getNotifications = async (req, res) => {
   try {
-    const notifications = await Notification.find({ owner: req.user.id }).sort(
-      '-date'
-    );
+    const notifications = await Notification.find({ owner: req.user.id })
+      .sort('-date')
+      .populate({
+        path: 'guest',
+        select: 'name avatar',
+      })
+      .populate({
+        path: 'post',
+        select: 'image',
+      });
 
     res.json(notifications);
   } catch (err) {

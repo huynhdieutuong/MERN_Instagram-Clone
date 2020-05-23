@@ -1,43 +1,57 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Spin } from 'antd';
 
-const Notifications = (props) => {
+import { getNotifications } from '../../redux/actions/notification';
+
+import NotificationItem from './NotificationItem';
+
+const Notifications = ({
+  notification: { loading, notifications },
+  getNotifications,
+}) => {
+  useEffect(() => {
+    getNotifications();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Fragment>
       <div className='arrow-nav'></div>
-      <div className='arrow-nav2'></div>
+      <div className='notifications-title'>
+        Notifications
+        <span>
+          <span>Mark All as Read</span> <span>Clear All</span>
+        </span>
+      </div>
       <ul className='notifications'>
-        <li>
-          Notifications
-          <span>
-            <span>Mark All as Read</span> <span>Clear All</span>
-          </span>
-        </li>
-        <li>
-          <a href='#!'>
-            <img
-              src='/uploads/avatars/avatar_5ec638516e9c3c4f08f7f468_1590144397116.png'
-              alt='avatar'
+        {loading ? (
+          <li style={{ justifyContent: 'center' }}>
+            <Spin />
+          </li>
+        ) : notifications.length > 0 ? (
+          notifications.map((notification) => (
+            <NotificationItem
+              key={notification._id}
+              notification={notification}
             />
-            <span>
-              <p>Tuong liked on your post</p>
-              <span>2 hours ago</span>
-            </span>
-            <img
-              src='/uploads/photos/photo_5ec638516e9c3c4f08f7f468_1590138397714.jpg'
-              alt='your post'
-            />
-            <div className='actions'>
-              <i title='Clear This' class='fas fa-times'></i>
-              <i title='Mark as Read' class='far fa-dot-circle'></i>
-            </div>
-          </a>
-        </li>
+          ))
+        ) : (
+          <li>No notifications...</li>
+        )}
       </ul>
     </Fragment>
   );
 };
 
-Notifications.propTypes = {};
+Notifications.propTypes = {
+  notification: PropTypes.object.isRequired,
+  getNotifications: PropTypes.func.isRequired,
+};
 
-export default Notifications;
+const mapStateToProps = (state) => ({
+  notification: state.notification,
+});
+
+export default connect(mapStateToProps, { getNotifications })(Notifications);

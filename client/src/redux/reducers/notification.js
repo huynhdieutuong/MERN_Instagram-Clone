@@ -1,4 +1,8 @@
-import { GET_NOTIFICATIONS, NOTIFICATION_ERROR } from '../types';
+import {
+  GET_NOTIFICATIONS,
+  NOTIFICATION_ERROR,
+  UPDATE_NOTIFICATIONS,
+} from '../types';
 
 const initialState = {
   notifications: [],
@@ -15,6 +19,14 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         notifications: payload,
+      };
+    case UPDATE_NOTIFICATIONS:
+      return {
+        ...state,
+        loading: false,
+        notifications: state.notifications.map((notification) =>
+          notification._id === payload._id ? payload : notification
+        ),
       };
     case NOTIFICATION_ERROR:
       return {

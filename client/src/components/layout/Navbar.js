@@ -69,12 +69,13 @@ const Navbar = ({
               )}
             </Link>
           </li>
-          <li
-            className='navigation__list-item navigation-notification'
-            onClick={() => onChangeCurrent('notification')}
-          >
+          <li className='navigation__list-item navigation-notification'>
             {count > 0 && <div className='number-unread'>{count}</div>}
-            <Link to='#!' className='navigation__link'>
+            <Link
+              to='#!'
+              className='navigation__link'
+              onClick={() => onChangeCurrent('notification')}
+            >
               {current === 'notification' ? (
                 <i className='fas fa-heart fa-lg'></i>
               ) : (

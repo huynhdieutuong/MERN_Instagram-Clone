@@ -23,7 +23,15 @@ exports.getNotifications = async (req, res) => {
 
 exports.markRead = async (req, res) => {
   try {
-    const notification = await Notification.findById(req.params.id);
+    const notification = await Notification.findById(req.params.id)
+      .populate({
+        path: 'guest',
+        select: 'name avatar',
+      })
+      .populate({
+        path: 'post',
+        select: 'image',
+      });
 
     if (!notification) {
       return res.status(404).json({ msg: 'Notification not found' });

@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+import { Popconfirm, message } from 'antd';
 
-import { addLike } from '../../redux/actions/post';
+import { addLike, deletePost } from '../../redux/actions/post';
 
 import AddComment from './AddComment';
 import CommnetItem from './CommentItem';
@@ -12,6 +13,7 @@ const PostItem = ({
   post: { _id, user, text, image, likes, comments, date },
   addLike,
   auth,
+  deletePost,
 }) => {
   // Check liked
   let isLike = false;
@@ -21,6 +23,11 @@ const PostItem = ({
       isLike = true;
     }
   });
+
+  const confirm = (e) => {
+    deletePost(_id);
+    message.success('Post Deleted');
+  };
 
   return (
     <div className='photo'>
@@ -33,6 +40,18 @@ const PostItem = ({
         <div className='photo__user-info'>
           <span className='photo__author'>{user.name}</span>
         </div>
+        {auth.user._id === user._id && (
+          <Popconfirm
+            title='Are you sure delete this post?'
+            onConfirm={confirm}
+            okText='Yes'
+            cancelText='No'
+          >
+            <a href='#!' style={{ color: 'red' }}>
+              Delete
+            </a>
+          </Popconfirm>
+        )}
       </header>
       <img src={`/uploads/photos/${image}`} alt='post' />
       <div className='photo__info'>
@@ -71,10 +90,11 @@ PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { addLike })(PostItem);
+export default connect(mapStateToProps, { addLike, deletePost })(PostItem);

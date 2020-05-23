@@ -25,6 +25,7 @@ export const UPDATE_LIKES = 'UPDATE_LIKES';
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const ADD_POST = 'ADD_POST';
 export const ADD_POST_ERROR = 'ADD_POST_ERROR';
+export const DELETE_POST = 'DELETE_POST';
 
 // Notification
 export const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS';

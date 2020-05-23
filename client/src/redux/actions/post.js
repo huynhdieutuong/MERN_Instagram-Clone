@@ -10,6 +10,7 @@ import {
   UPDATE_COMMENTS,
   ADD_POST,
   ADD_POST_ERROR,
+  DELETE_POST,
 } from '../types';
 
 export const getMyPosts = () => async (dispatch) => {
@@ -122,5 +123,22 @@ export const createPost = (formData) => async (dispatch) => {
       type: ADD_POST_ERROR,
       payload: errors,
     });
+  }
+};
+
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/posts/${id}`);
+
+    dispatch({
+      type: DELETE_POST,
+      payload: id,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
   }
 };

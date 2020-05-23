@@ -505,6 +505,10 @@ main {
   margin-right: 10px;
 }
 
+.photo .photo__user-info {
+  flex-grow: 1;
+}
+
 .photo .photo__user-info .photo__author {
   display: block;
   font-weight: 600;

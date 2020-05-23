@@ -7,6 +7,7 @@ import {
   UPDATE_COMMENTS,
   ADD_POST,
   ADD_POST_ERROR,
+  DELETE_POST,
 } from '../types';
 
 const initialState = {
@@ -56,6 +57,13 @@ export default function (state = initialState, action) {
         posts: [payload, ...state.posts],
         myposts: [payload, ...state.myposts],
         loading2: false,
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== payload),
+        myposts: state.myposts.filter((post) => post._id !== payload),
+        loading: false,
       };
     case GET_MYPOSTS_ERROR:
       return {

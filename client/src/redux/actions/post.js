@@ -8,6 +8,8 @@ import {
   GET_POSTS_ERROR,
   UPDATE_LIKES,
   UPDATE_COMMENTS,
+  ADD_POST,
+  ADD_POST_ERROR,
 } from '../types';
 
 export const getMyPosts = () => async (dispatch) => {
@@ -92,5 +94,33 @@ export const removeComment = (postId, commentId) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => dispatch(setAlert('error', error.msg)));
     }
+  }
+};
+
+export const createPost = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  try {
+    const res = await axios.post('/api/posts', formData, config);
+
+    dispatch({
+      type: ADD_POST,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+
+    dispatch({
+      type: ADD_POST_ERROR,
+      payload: errors,
+    });
   }
 };

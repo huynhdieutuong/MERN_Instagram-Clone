@@ -1238,3 +1238,47 @@ body {
   z-index: 10;
   background-color: white;
 }
+
+.photo .photo__info .create-post {
+  position: relative;
+  margin-top: 70px;
+}
+
+.create-post .input-file-container {
+  position: absolute;
+  top: -65px;
+  width: 225px;
+}
+
+.create-post .input-file-trigger {
+  display: block;
+  padding: 14px 45px;
+  background: #39d2b4;
+  color: #fff;
+  font-size: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.create-post span {
+  position: absolute;
+  top: -50px;
+  left: 250px;
+}
+
+.create-post .input-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 225px;
+  opacity: 0;
+  padding: 14px 0;
+  cursor: pointer;
+}
+.create-post .input-file:hover + .input-file-trigger,
+.create-post .input-file:focus + .input-file-trigger,
+.create-post .input-file-trigger:hover,
+.create-post .input-file-trigger:focus {
+  background: #34495e;
+  color: #39d2b4;
+}

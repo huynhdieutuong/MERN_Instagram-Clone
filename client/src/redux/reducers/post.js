@@ -5,6 +5,8 @@ import {
   GET_POSTS_ERROR,
   UPDATE_LIKES,
   UPDATE_COMMENTS,
+  ADD_POST,
+  ADD_POST_ERROR,
 } from '../types';
 
 const initialState = {
@@ -12,7 +14,8 @@ const initialState = {
   posts: [],
   post: null,
   loading: true,
-  error: null,
+  loading2: true,
+  error: [],
 };
 
 export default function (state = initialState, action) {
@@ -47,6 +50,13 @@ export default function (state = initialState, action) {
             : post
         ),
       };
+    case ADD_POST:
+      return {
+        ...state,
+        posts: [payload, ...state.posts],
+        myposts: [payload, ...state.myposts],
+        loading2: false,
+      };
     case GET_MYPOSTS_ERROR:
       return {
         ...state,
@@ -58,6 +68,12 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         posts: [],
+      };
+    case ADD_POST_ERROR:
+      return {
+        ...state,
+        loading2: false,
+        error: payload,
       };
     default:
       return state;

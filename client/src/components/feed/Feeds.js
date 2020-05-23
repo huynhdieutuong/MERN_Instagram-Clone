@@ -5,6 +5,7 @@ import Spinner from '../layout/Spinner';
 
 import { getPosts } from '../../redux/actions/post';
 import PostItem from './PostItem';
+import CreatePost from './CreatePost';
 
 const Feeds = ({ post: { loading, posts }, getPosts }) => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const Feeds = ({ post: { loading, posts }, getPosts }) => {
 
   return (
     <main id='feed'>
+      <CreatePost />
       {posts.map((post) => (
         <PostItem key={post._id} post={post} />
       ))}

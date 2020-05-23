@@ -52,10 +52,15 @@ exports.createPost = async (req, res) => {
     });
 
     // Create post
-    const post = await Post.create({
+    const newPost = await Post.create({
       user: req.user._id,
       text: req.body.text,
       image: name,
+    });
+
+    const post = await Post.findById(newPost.id).populate({
+      path: 'user',
+      select: 'name avatar',
     });
 
     res.json(post);

@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Spin } from 'antd';
 
-import { getNotifications } from '../../redux/actions/notification';
+import {
+  getNotifications,
+  markAllReadNotifications,
+  clearAllNotifications,
+} from '../../redux/actions/notification';
 
 import NotificationItem from './NotificationItem';
 
 const Notifications = ({
   notification: { loading, notifications },
   getNotifications,
+  markAllReadNotifications,
+  clearAllNotifications,
 }) => {
   useEffect(() => {
     getNotifications();
@@ -22,7 +28,10 @@ const Notifications = ({
       <div className='notifications-title'>
         Notifications
         <span>
-          <span>Mark All as Read</span> <span>Clear All</span>
+          <span onClick={() => markAllReadNotifications()}>
+            Mark All as Read
+          </span>{' '}
+          <span onClick={() => clearAllNotifications()}>Clear All</span>
         </span>
       </div>
       <ul className='notifications'>
@@ -48,10 +57,16 @@ const Notifications = ({
 Notifications.propTypes = {
   notification: PropTypes.object.isRequired,
   getNotifications: PropTypes.func.isRequired,
+  markAllReadNotifications: PropTypes.func.isRequired,
+  clearAllNotifications: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   notification: state.notification,
 });
 
-export default connect(mapStateToProps, { getNotifications })(Notifications);
+export default connect(mapStateToProps, {
+  getNotifications,
+  markAllReadNotifications,
+  clearAllNotifications,
+})(Notifications);

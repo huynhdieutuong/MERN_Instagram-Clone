@@ -33,6 +33,19 @@ export const markReadNotification = (id) => async (dispatch) => {
   }
 };
 
+export const markAllReadNotifications = () => async (dispatch) => {
+  try {
+    const res = await axios.put('/api/notifications');
+
+    dispatch({
+      type: GET_NOTIFICATIONS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: NOTIFICATION_ERROR });
+  }
+};
+
 export const clearNotification = (id) => async (dispatch) => {
   try {
     await axios.delete(`/api/notifications/${id}`);
@@ -40,6 +53,19 @@ export const clearNotification = (id) => async (dispatch) => {
     dispatch({
       type: CLEAR_NOTIFICATION,
       payload: id,
+    });
+  } catch (err) {
+    dispatch({ type: NOTIFICATION_ERROR });
+  }
+};
+
+export const clearAllNotifications = () => async (dispatch) => {
+  try {
+    const res = await axios.delete('/api/notifications');
+
+    dispatch({
+      type: GET_NOTIFICATIONS,
+      payload: res.data,
     });
   } catch (err) {
     dispatch({ type: NOTIFICATION_ERROR });

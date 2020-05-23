@@ -54,6 +54,29 @@ exports.markRead = async (req, res) => {
   }
 };
 
+exports.markAllRead = async (req, res) => {
+  try {
+    await Notification.updateMany({ owner: req.user.id }, { isRead: true });
+
+    const notifications = await Notification.find({ owner: req.user.id })
+      .sort('-date')
+      .populate({
+        path: 'guest',
+        select: 'name avatar',
+      })
+      .populate({
+        path: 'post',
+        select: 'image',
+      });
+
+    res.json(notifications);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};
+
 exports.clearNotification = async (req, res) => {
   try {
     const notification = await Notification.findById(req.params.id);
@@ -71,6 +94,18 @@ exports.clearNotification = async (req, res) => {
     await notification.remove();
 
     res.json({ msg: 'Cleared notification' });
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};
+
+exports.clearAll = async (req, res) => {
+  try {
+    await Notification.deleteMany({ owner: req.user.id });
+
+    res.json([]);
   } catch (err) {
     console.error(err.message);
 

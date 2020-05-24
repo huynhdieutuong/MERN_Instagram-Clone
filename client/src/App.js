@@ -18,11 +18,15 @@ import ResetPassword from './components/auth/ResetPassword';
 import Profile from './components/profile/Profile';
 import Feeds from './components/feed/Feeds';
 import SinglePost from './components/feed/SinglePost';
+import EditProfile from './components/profile/EditProfile';
+import ChangePassword from './components/profile/ChangePassword';
+import ChangeEmail from './components/profile/ChangeEmail';
 import NotFound from './components/layout/NotFound';
 
 // Layout Routes
 import LandingLayoutRoute from './components/routing/LandingLayoutRoute';
 import MainLayoutRoute from './components/routing/MainLayoutRoute';
+import EditProfileLayoutRoute from './components/routing/EditProfileLayoutRoute';
 
 const App = () => {
   useEffect(() => {
@@ -51,6 +55,21 @@ const App = () => {
           <MainLayoutRoute exact path='/' component={Feeds} />
           <MainLayoutRoute exact path='/profile' component={Profile} />
           <MainLayoutRoute exact path='/posts/:id' component={SinglePost} />
+          <EditProfileLayoutRoute
+            exact
+            path='/edit-profile'
+            component={EditProfile}
+          />
+          <EditProfileLayoutRoute
+            exact
+            path='/change-password'
+            component={ChangePassword}
+          />
+          <EditProfileLayoutRoute
+            exact
+            path='/change-email'
+            component={ChangeEmail}
+          />
           <Route component={NotFound} />
         </Switch>
 

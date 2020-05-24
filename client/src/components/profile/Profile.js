@@ -32,7 +32,6 @@ const Profile = ({
           <div className='profile__title'>
             <h3 className='profile__username'>{email}</h3>
             <Link to='/edit-profile'>Edit profile</Link>
-            <i className='fas fa-cog fa-lg'></i>
           </div>
           <ul className='profile__stats'>
             <li className='profile__stat'>

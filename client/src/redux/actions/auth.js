@@ -16,6 +16,7 @@ import {
   LOADING_AVATAR,
   EDIT_PROFILE,
   CHANGE_PASSWORD,
+  CHANGE_EMAIL,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -266,5 +267,32 @@ export const changePassword = (formData) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => dispatch(setAlert('error', error.msg)));
     }
+  }
+};
+
+// Change Email
+export const changeEmail = (formData) => async (dispatch) => {
+  dispatch({ type: LOADING_AVATAR });
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put('/api/auth/changeemail', formData, config);
+
+    dispatch({ type: CHANGE_EMAIL });
+
+    return res.data.msg;
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+
+    dispatch({ type: CHANGE_EMAIL });
   }
 };

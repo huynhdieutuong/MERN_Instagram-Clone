@@ -1016,6 +1016,10 @@ main {
   height: 85vh;
 }
 
+.spinner-short {
+  height: 100px;
+}
+
 .no-post {
   display: flex;
   width: 100%;
@@ -1430,6 +1434,10 @@ body {
   margin: 0;
 }
 
+.edit-profile__menu {
+  margin-bottom: 0px;
+}
+
 .edit-profile__menu a {
   display: block;
   width: 100%;
@@ -1449,4 +1457,8 @@ body {
 .edit-profile__menu .active {
   font-weight: 500;
   border-left-color: #262626;
+}
+
+.edit-profile__form .email-sent {
+  padding: 20px;
 }

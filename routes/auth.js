@@ -122,7 +122,13 @@ router.put(
 router.put(
   '/changeemail',
   protect,
-  [check('email', 'Please include a valid email').isEmail()],
+  [
+    check(
+      'currentPassword',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+    check('email', 'Please include a valid email').isEmail(),
+  ],
   changeEmail
 );
 

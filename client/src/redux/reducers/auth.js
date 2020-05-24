@@ -13,6 +13,7 @@ import {
   LOADING_AVATAR,
   EDIT_PROFILE,
   CHANGE_PASSWORD,
+  CHANGE_EMAIL,
 } from '../types';
 
 const initialState = {
@@ -88,6 +89,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: payload,
+        loading: false,
+      };
+    case CHANGE_EMAIL:
+      return {
+        ...state,
         loading: false,
       };
     default:

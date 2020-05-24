@@ -31,7 +31,14 @@ const Profile = ({
         <div className='profile__column'>
           <div className='profile__title'>
             <h3 className='profile__username'>{email}</h3>
-            <Link to='/edit-profile'>Edit profile</Link>
+            <Link
+              to='/edit-profile'
+              onClick={() =>
+                localStorage.setItem('currentTabEdit', 'edit-profile')
+              }
+            >
+              Edit profile
+            </Link>
           </div>
           <ul className='profile__stats'>
             <li className='profile__stat'>

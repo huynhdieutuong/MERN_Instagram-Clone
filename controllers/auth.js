@@ -393,6 +393,19 @@ exports.changeEmail = async (req, res) => {
   }
 
   try {
+    const user = await User.findById(req.user._id);
+
+    // If current password incorrect
+    const isMatch = await bcrypt.compare(
+      req.body.currentPassword,
+      user.password
+    );
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ errors: [{ msg: 'Current password is incorrect' }] });
+    }
+
     // Check if email already used
     const userExists = await User.findOne({ email: req.body.email }).select(
       '-password'
@@ -407,19 +420,12 @@ exports.changeEmail = async (req, res) => {
       });
     }
 
-    // Save new email
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { email: req.body.email, isVerified: false },
-      { new: true }
-    );
-
     // Create a verification token for this user
     const token = crypto.randomBytes(16).toString('hex');
 
     await Token.create({
       user: user._id,
-      email: user.email,
+      email: req.body.email,
       token: crypto.createHash('sha256').update(token).digest('hex'),
       tokenExpire: Date.now() + 24 * 60 * 60 * 1000,
     });
@@ -432,13 +438,13 @@ exports.changeEmail = async (req, res) => {
     const message = `Hello ${user.name},\n\n Please verify your account by clicking the link below: \n\n ${tokenUrl}`;
 
     await sendEmail({
-      email: user.email,
+      email: req.body.email,
       subject: 'Account verification token',
       message,
     });
 
     res.status(200).json({
-      msg: `A verification email has been sent to ${user.email}.`,
+      msg: `A verification email has been sent to ${req.body.email}.`,
     });
   } catch (err) {
     console.error(err.message);

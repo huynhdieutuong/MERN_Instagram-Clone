@@ -11,6 +11,7 @@ import {
   AUTH_ERROR,
   UPDATE_AVATAR,
   LOADING_AVATAR,
+  EDIT_PROFILE,
 } from '../types';
 
 const initialState = {
@@ -81,6 +82,7 @@ export default function (state = initialState, action) {
         loading: true,
       };
     case UPDATE_AVATAR:
+    case EDIT_PROFILE:
       return {
         ...state,
         user: payload,

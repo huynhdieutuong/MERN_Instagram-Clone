@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const EditProfile = ({ auth: { user } }) => {
+import { editProfile } from '../../redux/actions/auth';
+
+const EditProfile = ({ auth: { user }, editProfile }) => {
   useEffect(() => {
     localStorage.setItem('currentTabEdit', 'edit-profile');
     // eslint-disable-next-line
@@ -20,7 +22,7 @@ const EditProfile = ({ auth: { user } }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    editProfile(formData);
   };
 
   return (
@@ -73,10 +75,11 @@ const EditProfile = ({ auth: { user } }) => {
 
 EditProfile.propTypes = {
   auth: PropTypes.object.isRequired,
+  editProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(EditProfile);
+export default connect(mapStateToProps, { editProfile })(EditProfile);

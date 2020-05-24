@@ -14,6 +14,7 @@ import {
   AUTH_ERROR,
   UPDATE_AVATAR,
   LOADING_AVATAR,
+  EDIT_PROFILE,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -204,6 +205,32 @@ export const changeAvatar = (formData) => async (dispatch) => {
       type: UPDATE_AVATAR,
       payload: res.data,
     });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+  }
+};
+
+// Edit Profile
+export const editProfile = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put('/api/auth/updateinfo', formData, config);
+
+    dispatch({
+      type: EDIT_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('success', 'Info Updated'));
   } catch (err) {
     const errors = err.response.data.errors;
 

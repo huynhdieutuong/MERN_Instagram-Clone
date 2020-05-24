@@ -1,5 +1,4 @@
 import {
-  LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   CONFIRMATION_SUCCESS,
@@ -10,6 +9,8 @@ import {
   SENDMAIL_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  UPDATE_AVATAR,
+  LOADING_AVATAR,
 } from '../types';
 
 const initialState = {
@@ -74,10 +75,16 @@ export default function (state = initialState, action) {
         loading: false,
         loading2: false,
       };
-    case LOADING:
+    case LOADING_AVATAR:
       return {
         ...state,
         loading: true,
+      };
+    case UPDATE_AVATAR:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
       };
     default:
       return state;

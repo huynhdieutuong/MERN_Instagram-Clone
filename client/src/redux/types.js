@@ -1,5 +1,6 @@
 export const LOADING = 'LOADING';
 export const LOADING2 = 'LOADING2';
+export const LOADING_AVATAR = 'LOADING_AVATAR';
 
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
@@ -16,6 +17,7 @@ export const SENDMAIL_SUCCESS = 'SENDMAIL_SUCCESS';
 export const SENDMAIL_FAIL = 'SENDMAIL_FAIL';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
+export const UPDATE_AVATAR = 'UPDATE_AVATAR';
 
 // Post
 export const GET_MYPOSTS = 'GET_MYPOSTS';

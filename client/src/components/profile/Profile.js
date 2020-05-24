@@ -6,6 +6,7 @@ import { Spin } from 'antd';
 
 import ProfilePhotos from './ProfilePhotos';
 import ProfileNoPost from './ProfileNoPost';
+import ChangeAvatar from './ChangeAvatar';
 
 import { getMyPosts } from '../../redux/actions/post';
 
@@ -25,7 +26,7 @@ const Profile = ({
     <main id='profile'>
       <header className='profile__header'>
         <div className='profile__column'>
-          <img src={`uploads/avatars/${avatar}`} alt='avatar' />
+          <ChangeAvatar avatar={avatar} />
         </div>
         <div className='profile__column'>
           <div className='profile__title'>

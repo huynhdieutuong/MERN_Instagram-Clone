@@ -12,6 +12,8 @@ import {
   SENDMAIL_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  UPDATE_AVATAR,
+  LOADING_AVATAR,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -182,5 +184,31 @@ export const resetPassword = (token, password) => async (dispatch) => {
       type: CONFIRMATION_FAIL,
       payload: err.response.data.msg,
     });
+  }
+};
+
+// Change Avatar
+export const changeAvatar = (formData) => async (dispatch) => {
+  dispatch({ type: LOADING_AVATAR });
+
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  try {
+    const res = await axios.put('/api/auth/updateavatar', formData, config);
+
+    dispatch({
+      type: UPDATE_AVATAR,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
   }
 };

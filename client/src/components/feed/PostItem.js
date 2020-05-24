@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Popconfirm, message } from 'antd';
 
 import { addLike, deletePost } from '../../redux/actions/post';
 
 import AddComment from './AddComment';
-import CommnetItem from './CommentItem';
+import CommentItem from './CommentItem';
 
 const PostItem = ({
   post: { _id, user, text, image, likes, comments, date },
@@ -64,7 +65,9 @@ const PostItem = ({
             )}
           </span>
           <span className='photo__action'>
-            <i className='far fa-comment fa-lg'></i>
+            <Link to={`/posts/${_id}`}>
+              <i className='far fa-comment fa-lg'></i>
+            </Link>
           </span>
         </div>
         <span className='photo__likes'>{likes.length} likes</span>
@@ -74,7 +77,7 @@ const PostItem = ({
         <ul className='photo__comments'>
           {comments.length > 0 &&
             comments.map((comment) => (
-              <CommnetItem key={comment._id} comment={comment} postId={_id} />
+              <CommentItem key={comment._id} comment={comment} postId={_id} />
             ))}
         </ul>
         <span className='photo__time-ago'>

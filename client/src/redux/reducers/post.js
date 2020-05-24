@@ -8,6 +8,11 @@ import {
   ADD_POST,
   ADD_POST_ERROR,
   DELETE_POST,
+  GET_POST,
+  LOADING,
+  LOADING2,
+  UPDATE_LIKES_SINGLE,
+  UPDATE_COMMENTS_SINGLE,
 } from '../types';
 
 const initialState = {
@@ -15,7 +20,7 @@ const initialState = {
   posts: [],
   post: null,
   loading: true,
-  loading2: true,
+  loading2: false,
   error: [],
 };
 
@@ -23,6 +28,16 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOADING2:
+      return {
+        ...state,
+        loading2: true,
+      };
     case GET_MYPOSTS:
       return {
         ...state,
@@ -34,6 +49,8 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         posts: payload,
+        myposts: [],
+        post: null,
       };
     case UPDATE_LIKES:
       return {
@@ -41,6 +58,18 @@ export default function (state = initialState, action) {
         posts: state.posts.map((post) =>
           post._id === payload.id ? { ...post, likes: payload.likes } : post
         ),
+      };
+    case UPDATE_LIKES_SINGLE:
+      return {
+        ...state,
+        post: { ...state.post, likes: payload },
+        loading: false,
+      };
+    case UPDATE_COMMENTS_SINGLE:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
+        loading: false,
       };
     case UPDATE_COMMENTS:
       return {
@@ -65,6 +94,14 @@ export default function (state = initialState, action) {
         myposts: state.myposts.filter((post) => post._id !== payload),
         loading: false,
       };
+    case GET_POST: {
+      return {
+        ...state,
+        loading: false,
+        post: payload.post,
+        myposts: payload.myposts,
+      };
+    }
     case GET_MYPOSTS_ERROR:
       return {
         ...state,

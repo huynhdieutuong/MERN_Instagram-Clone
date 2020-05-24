@@ -1,4 +1,5 @@
 export const LOADING = 'LOADING';
+export const LOADING2 = 'LOADING2';
 
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
@@ -26,6 +27,9 @@ export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const ADD_POST = 'ADD_POST';
 export const ADD_POST_ERROR = 'ADD_POST_ERROR';
 export const DELETE_POST = 'DELETE_POST';
+export const GET_POST = 'GET_POST';
+export const UPDATE_LIKES_SINGLE = 'UPDATE_LIKES_SINGLE';
+export const UPDATE_COMMENTS_SINGLE = 'UPDATE_COMMENTS_SINGLE';
 
 // Notification
 export const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS';

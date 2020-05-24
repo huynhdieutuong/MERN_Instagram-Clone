@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Spin } from 'antd';
 
 import { createPost } from '../../redux/actions/post';
 
@@ -9,15 +10,15 @@ const CreatePost = ({ createPost, post: { error, loading2 } }) => {
   const [file, setFile] = useState('');
   const [fileName, setFileName] = useState('');
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append('image', file);
     formData.append('text', text);
-    createPost(formData);
+    const success = await createPost(formData);
 
-    if (!loading2 && error.length === 0) {
+    if (success) {
       setText('');
       setFile('');
       setFileName('');
@@ -28,6 +29,14 @@ const CreatePost = ({ createPost, post: { error, loading2 } }) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
+
+  if (loading2) {
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
+  }
 
   return (
     <div className='photo'>

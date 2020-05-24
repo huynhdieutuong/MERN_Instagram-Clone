@@ -11,7 +11,20 @@ import {
   ADD_POST,
   ADD_POST_ERROR,
   DELETE_POST,
+  GET_POST,
+  LOADING,
+  LOADING2,
+  UPDATE_LIKES_SINGLE,
+  UPDATE_COMMENTS_SINGLE,
 } from '../types';
+
+export const setLoading = () => async (dispatch) => {
+  dispatch({ type: LOADING });
+};
+
+export const setLoading2 = () => async (dispatch) => {
+  dispatch({ type: LOADING2 });
+};
 
 export const getMyPosts = () => async (dispatch) => {
   try {
@@ -39,14 +52,21 @@ export const getPosts = () => async (dispatch) => {
   }
 };
 
-export const addLike = (id) => async (dispatch) => {
+export const addLike = (id, single = false) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/posts/like/${id}`);
 
-    dispatch({
-      type: UPDATE_LIKES,
-      payload: { id, likes: res.data },
-    });
+    if (single) {
+      dispatch({
+        type: UPDATE_LIKES_SINGLE,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_LIKES,
+        payload: { id, likes: res.data },
+      });
+    }
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -56,7 +76,7 @@ export const addLike = (id) => async (dispatch) => {
   }
 };
 
-export const addComment = (id, text) => async (dispatch) => {
+export const addComment = (id, text, single = false) => async (dispatch) => {
   text = text.trim() === '' ? null : text.trim();
 
   const config = {
@@ -68,10 +88,17 @@ export const addComment = (id, text) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/posts/comment/${id}`, { text }, config);
 
-    dispatch({
-      type: UPDATE_COMMENTS,
-      payload: { id, comments: res.data },
-    });
+    if (single) {
+      dispatch({
+        type: UPDATE_COMMENTS_SINGLE,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_COMMENTS,
+        payload: { id, comments: res.data },
+      });
+    }
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -81,14 +108,23 @@ export const addComment = (id, text) => async (dispatch) => {
   }
 };
 
-export const removeComment = (postId, commentId) => async (dispatch) => {
+export const removeComment = (postId, commentId, single = false) => async (
+  dispatch
+) => {
   try {
     const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 
-    dispatch({
-      type: UPDATE_COMMENTS,
-      payload: { id: postId, comments: res.data },
-    });
+    if (single) {
+      dispatch({
+        type: UPDATE_COMMENTS_SINGLE,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_COMMENTS,
+        payload: { id: postId, comments: res.data },
+      });
+    }
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -99,6 +135,8 @@ export const removeComment = (postId, commentId) => async (dispatch) => {
 };
 
 export const createPost = (formData) => async (dispatch) => {
+  dispatch(setLoading2());
+
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -112,6 +150,8 @@ export const createPost = (formData) => async (dispatch) => {
       type: ADD_POST,
       payload: res.data,
     });
+
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -126,13 +166,38 @@ export const createPost = (formData) => async (dispatch) => {
   }
 };
 
-export const deletePost = (id) => async (dispatch) => {
+export const deletePost = (id, history) => async (dispatch) => {
   try {
     await axios.delete(`/api/posts/${id}`);
 
     dispatch({
       type: DELETE_POST,
       payload: id,
+    });
+
+    if (history) {
+      history.push('/profile');
+    }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+  }
+};
+
+export const getPost = (id) => async (dispatch) => {
+  dispatch(setLoading());
+
+  try {
+    const res = await axios.get(`/api/posts/${id}`);
+
+    const res2 = await axios.get(`/api/posts/user/${res.data.user._id}`);
+
+    dispatch({
+      type: GET_POST,
+      payload: { post: res.data, myposts: res2.data },
     });
   } catch (err) {
     const errors = err.response.data.errors;

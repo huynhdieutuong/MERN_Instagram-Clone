@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 import { addComment } from '../../redux/actions/post';
 
-const AddComment = ({ postId, addComment }) => {
+const AddComment = ({ postId, addComment, single }) => {
   const [comment, setComment] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addComment(postId, comment);
+    addComment(postId, comment, single);
     setComment('');
   };
 

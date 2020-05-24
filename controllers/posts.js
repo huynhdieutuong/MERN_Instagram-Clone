@@ -98,9 +98,24 @@ exports.getPostsMe = async (req, res) => {
   }
 };
 
+exports.getPostsUser = async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.params.id }).sort('-date');
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+};
+
 exports.getPost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate({
+      path: 'user',
+      select: 'name avatar',
+    });
 
     if (!post) {
       return res.status(404).json({ errors: [{ msg: 'Post not found' }] });

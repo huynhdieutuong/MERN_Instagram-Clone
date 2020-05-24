@@ -9,6 +9,7 @@ const {
   createPost,
   getPosts,
   getPostsMe,
+  getPostsUser,
   getPost,
   deletePost,
   likePost,
@@ -32,9 +33,14 @@ router.post(
 router.get('/', getPosts);
 
 // @route   GET api/posts/me
-// @desc    Get all posts of user
+// @desc    Get all posts of user logged in
 // @access  Private
 router.get('/me', protect, getPostsMe);
+
+// @route   GET api/posts/me
+// @desc    Get all posts of user
+// @access  Public
+router.get('/user/:id', checkObjectId('id'), getPostsUser);
 
 // @route   GET api/posts/:id
 // @desc    Get post by ID

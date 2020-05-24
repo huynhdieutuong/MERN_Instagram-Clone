@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const ProfilePhotoItem = ({ post: { image, likes, comments } }) => {
+const ProfilePhotoItem = ({ post: { _id, image, likes, comments } }) => {
   return (
     <div className='profile__photo'>
       <span
         className='profile__photo-background'
         style={{ backgroundImage: `url(/uploads/photos/${image})` }}
       ></span>
-      <div className='profile__photo-overlay'>
+      <Link to={`/posts/${_id}`} className='profile__photo-overlay'>
         <span className='overlay__item'>
           <i className='fas fa-heart'></i>
           {likes.length}
@@ -17,7 +18,7 @@ const ProfilePhotoItem = ({ post: { image, likes, comments } }) => {
           <i className='fas fa-comment'></i>
           {comments.length}
         </span>
-      </div>
+      </Link>
     </div>
   );
 };

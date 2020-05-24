@@ -49,6 +49,7 @@ const Profile = ({
           </p>
         </div>
       </header>
+      <div className='divide-section'></div>
       <section className='profile__photos'>
         {loading ? (
           <Spin />

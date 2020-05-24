@@ -17,6 +17,7 @@ import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import Profile from './components/profile/Profile';
 import Feeds from './components/feed/Feeds';
+import SinglePost from './components/feed/SinglePost';
 import NotFound from './components/layout/NotFound';
 
 // Layout Routes
@@ -49,6 +50,7 @@ const App = () => {
           <Route exact path='/confirmation/:token' component={Confirmation} />
           <MainLayoutRoute exact path='/' component={Feeds} />
           <MainLayoutRoute exact path='/profile' component={Profile} />
+          <MainLayoutRoute exact path='/posts/:id' component={SinglePost} />
           <Route component={NotFound} />
         </Switch>
 

@@ -19,6 +19,7 @@ export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const UPDATE_AVATAR = 'UPDATE_AVATAR';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 // Post
 export const GET_MYPOSTS = 'GET_MYPOSTS';

@@ -12,6 +12,7 @@ import {
   UPDATE_AVATAR,
   LOADING_AVATAR,
   EDIT_PROFILE,
+  CHANGE_PASSWORD,
 } from '../types';
 
 const initialState = {
@@ -39,6 +40,7 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
     case CONFIRMATION_SUCCESS:
     case LOGIN_SUCCESS:
+    case CHANGE_PASSWORD:
       localStorage.setItem('token', payload.token);
       return {
         ...state,

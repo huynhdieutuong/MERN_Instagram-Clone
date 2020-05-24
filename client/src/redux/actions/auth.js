@@ -15,6 +15,7 @@ import {
   UPDATE_AVATAR,
   LOADING_AVATAR,
   EDIT_PROFILE,
+  CHANGE_PASSWORD,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -231,6 +232,34 @@ export const editProfile = (formData) => async (dispatch) => {
     });
 
     dispatch(setAlert('success', 'Info Updated'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+  }
+};
+
+// Change Password
+export const changePassword = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put('/api/auth/changepassword', formData, config);
+
+    dispatch({
+      type: CHANGE_PASSWORD,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('success', 'Password Changed'));
+
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 

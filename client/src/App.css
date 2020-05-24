@@ -1446,7 +1446,7 @@ body {
   color: #262626;
 }
 
-.edit-profile__menu a:focus {
+.edit-profile__menu .active {
   font-weight: 500;
   border-left-color: #262626;
 }

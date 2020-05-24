@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,26 +6,9 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const EditProfileLayout = ({ auth: { user }, children }) => {
-  const editProfile = useRef(null);
-  const changePassword = useRef(null);
-  const changeEmail = useRef(null);
-
-  useEffect(() => {
-    const currentTab = localStorage.getItem('currentTabEdit');
-
-    if (currentTab === 'edit-profile') {
-      editProfile.current.focus();
-    }
-
-    if (currentTab === 'change-password') {
-      changePassword.current.focus();
-    }
-
-    if (currentTab === 'change-email') {
-      changeEmail.current.focus();
-    }
-    // eslint-disable-next-line
-  }, []);
+  const [currentTab, setCurrentTab] = useState(
+    localStorage.getItem('currentTabEdit')
+  );
 
   return (
     <Fragment>
@@ -33,17 +16,29 @@ const EditProfileLayout = ({ auth: { user }, children }) => {
       <main id='edit-profile'>
         <ul className='edit-profile__menu'>
           <li>
-            <Link ref={editProfile} to='/edit-profile'>
+            <Link
+              to='/edit-profile'
+              className={currentTab === 'edit-profile' ? 'active' : ''}
+              onClick={() => setCurrentTab('edit-profile')}
+            >
               Edit Profile
             </Link>
           </li>
           <li>
-            <Link ref={changePassword} to='/change-password'>
+            <Link
+              to='/change-password'
+              className={currentTab === 'change-password' ? 'active' : ''}
+              onClick={() => setCurrentTab('change-password')}
+            >
               Change Password
             </Link>
           </li>
           <li>
-            <Link ref={changeEmail} to='/change-email'>
+            <Link
+              to='/change-email'
+              className={currentTab === 'change-email' ? 'active' : ''}
+              onClick={() => setCurrentTab('change-email')}
+            >
               Change Email
             </Link>
           </li>

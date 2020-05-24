@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const ChangePassword = () => {
+import { setAlert } from '../../redux/actions/alerts';
+import { changePassword } from '../../redux/actions/auth';
+
+const ChangePassword = ({ setAlert, changePassword }) => {
   useEffect(() => {
     localStorage.setItem('currentTabEdit', 'change-password');
     // eslint-disable-next-line
@@ -19,9 +23,21 @@ const ChangePassword = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (password !== password2) {
+      setAlert('error', 'Confirm Password Wrong');
+    } else {
+      const success = await changePassword({ currentPassword, password });
+
+      if (success) {
+        setFormData({
+          currentPassword: '',
+          password: '',
+          password2: '',
+        });
+      }
+    }
   };
 
   return (
@@ -70,6 +86,9 @@ const ChangePassword = () => {
   );
 };
 
-ChangePassword.propTypes = {};
+ChangePassword.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
+};
 
-export default ChangePassword;
+export default connect(null, { setAlert, changePassword })(ChangePassword);

@@ -353,7 +353,9 @@ exports.changePassword = async (req, res) => {
     // If current password incorrect
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
-      return res.status(401).json({ msg: 'Current password is incorrect' });
+      return res
+        .status(401)
+        .json({ errors: [{ msg: 'Current password is incorrect' }] });
     }
 
     // Change password
@@ -397,7 +399,11 @@ exports.changeEmail = async (req, res) => {
     );
     if (userExists) {
       return res.status(400).json({
-        msg: `Email already used`,
+        errors: [
+          {
+            msg: `Email already used`,
+          },
+        ],
       });
     }
 
@@ -442,21 +448,25 @@ exports.changeEmail = async (req, res) => {
 
 exports.updateAvatar = async (req, res) => {
   if (!req.files) {
-    return res.status(400).json({ msg: 'Please upload an avatar' });
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please upload an avatar' }] });
   }
 
   let { name, size, mimetype, mv } = req.files.avatar;
 
   // Make sure the image is a photo
   if (!mimetype.startsWith('image')) {
-    return res.status(400).json({ msg: 'Please upload an image file' });
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please upload an image file' }] });
   }
 
   // Check filesize
   if (size > 5 * 1024 * 1024) {
     return res
       .status(400)
-      .json({ msg: 'Please upload an image less than 5 MB' });
+      .json({ errors: [{ msg: 'Please upload an image less than 5 MB' }] });
   }
 
   // Create custom filename
@@ -467,7 +477,9 @@ exports.updateAvatar = async (req, res) => {
     mv(`./public/uploads/avatars/${name}`, async (error) => {
       if (error) {
         console.error(error);
-        return res.status(500).json({ msg: 'Problem with file upload' });
+        return res
+          .status(500)
+          .json({ errors: [{ msg: 'Problem with file upload' }] });
       }
     });
 

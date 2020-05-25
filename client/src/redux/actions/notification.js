@@ -5,6 +5,7 @@ import {
   NOTIFICATION_ERROR,
   UPDATE_NOTIFICATIONS,
   CLEAR_NOTIFICATION,
+  TOGGLE_NOTIFICATIONS,
 } from '../types';
 
 export const getNotifications = () => async (dispatch) => {
@@ -70,4 +71,11 @@ export const clearAllNotifications = () => async (dispatch) => {
   } catch (err) {
     dispatch({ type: NOTIFICATION_ERROR });
   }
+};
+
+export const setToggle = (toggle = false) => async (dispatch) => {
+  dispatch({
+    type: TOGGLE_NOTIFICATIONS,
+    payload: toggle,
+  });
 };

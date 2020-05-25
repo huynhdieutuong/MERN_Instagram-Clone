@@ -7,12 +7,13 @@ import Logo from '../../images/loginLogo.png';
 import Spinner from './Spinner';
 import Notifications from '../notification/Notifications';
 
-import { getNotifications } from '../../redux/actions/notification';
+import { getNotifications, setToggle } from '../../redux/actions/notification';
 
 const Navbar = ({
   auth: { user },
-  notification: { loading, notifications },
+  notification: { loading, notifications, toggle },
   getNotifications,
+  setToggle,
 }) => {
   useEffect(() => {
     getNotifications();
@@ -20,7 +21,6 @@ const Navbar = ({
   }, []);
 
   const [current, setCurrent] = useState(localStorage.getItem('currentMenu'));
-  const [toggleNotifications, setToggle] = useState(false);
 
   const onChangeCurrent = (name) => {
     setCurrent(name);
@@ -28,7 +28,7 @@ const Navbar = ({
       if (current === 'notification') {
         setCurrent('feeds');
       }
-      setToggle(!toggleNotifications);
+      setToggle(!toggle);
     } else {
       setToggle(false);
     }
@@ -85,7 +85,7 @@ const Navbar = ({
                 <i className='far fa-heart fa-lg'></i>
               )}
             </Link>
-            {toggleNotifications && <Notifications />}
+            {toggle && <Notifications />}
           </li>
           <li
             className='navigation__list-item'
@@ -113,6 +113,7 @@ Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
   notification: PropTypes.object.isRequired,
   getNotifications: PropTypes.func.isRequired,
+  setToggle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -120,4 +121,6 @@ const mapStateToProps = (state) => ({
   notification: state.notification,
 });
 
-export default connect(mapStateToProps, { getNotifications })(Navbar);
+export default connect(mapStateToProps, { getNotifications, setToggle })(
+  Navbar
+);

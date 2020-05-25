@@ -3,12 +3,14 @@ import {
   NOTIFICATION_ERROR,
   UPDATE_NOTIFICATIONS,
   CLEAR_NOTIFICATION,
+  TOGGLE_NOTIFICATIONS,
 } from '../types';
 
 const initialState = {
   notifications: [],
   loading: true,
   error: null,
+  toggle: false,
 };
 
 export default function (state = initialState, action) {
@@ -43,6 +45,11 @@ export default function (state = initialState, action) {
         loading: false,
         notifications: [],
         error: payload,
+      };
+    case TOGGLE_NOTIFICATIONS:
+      return {
+        ...state,
+        toggle: payload,
       };
     default:
       return state;

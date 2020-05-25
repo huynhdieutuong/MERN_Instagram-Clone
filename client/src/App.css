@@ -1167,10 +1167,6 @@ body {
   border-radius: 50%;
 }
 
-.navigation-notification .notifications li a img:last-child {
-  margin-right: 30px;
-}
-
 .navigation-notification .notifications li .actions {
   display: flex;
   flex-direction: column;

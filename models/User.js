@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const config = require('config');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -18,7 +17,7 @@ const UserSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: config.get('default_avatar'),
+    default: 'avatar_5ec638516e9c3c4f08f7f468_1590144397116.png',
   },
   isVerified: {
     type: Boolean,

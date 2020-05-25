@@ -6,7 +6,7 @@ This is a MERN stack application. It is a small social network app that includes
 
 ## Demo Live
 
-### The App is live at [Heroku.com]()
+### The App is live at [Heroku.com](https://tuong-instagram.herokuapp.com/)
 
 ### The API is live at [getpostman.com](https://documenter.getpostman.com/view/6870044/Szt5gXEP?version=latest)
 
@@ -58,13 +58,10 @@ This is a MERN stack application. It is a small social network app that includes
 
 ### Add a default.json file in config folder with the following
 
-Create account https://mailtrap.io/ to get SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD
-
 ```
 {
   "mongoURI": "<your_mongoDB_URI>",
   "jwtSecret: "secret",
-  "default_avatar": "<your_link>",
   "SMTP_HOST": "",
   "SMTP_PORT": "",
   "SMTP_USER": "",

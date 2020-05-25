@@ -238,7 +238,7 @@ main {
 .login__form input[type='submit'] {
   background-color: #3f99ed;
   border: 0;
-  padding: 5px;
+  padding: 10px;
   margin-top: 15px;
   margin-bottom: 20px;
   color: white;
@@ -885,7 +885,7 @@ main {
   border-radius: 3px;
   background-color: var(--fd-blue);
   font-size: 14px;
-  padding: 7px 25px;
+  padding: 12px 25px;
 }
 
 /* Mobile */

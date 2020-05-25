@@ -1,4 +1,5 @@
 export const LOADING = 'LOADING';
+export const STOP_LOADING = 'STOP_LOADING';
 export const LOADING2 = 'LOADING2';
 export const LOADING_SEND_EMAIL = 'LOADING_SEND_EMAIL';
 export const LOADING_AVATAR = 'LOADING_AVATAR';

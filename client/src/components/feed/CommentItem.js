@@ -46,6 +46,7 @@ CommentItem.propTypes = {
   comment: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
   removeComment: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

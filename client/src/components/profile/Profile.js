@@ -9,17 +9,19 @@ import ProfileNoPost from './ProfileNoPost';
 import ChangeAvatar from './ChangeAvatar';
 
 import { getMyPosts } from '../../redux/actions/post';
-import { logout } from '../../redux/actions/auth';
+import { logout, stopLoading } from '../../redux/actions/auth';
 
 const Profile = ({
   auth: { user },
   post: { loading, myposts },
   getMyPosts,
   logout,
+  stopLoading,
 }) => {
   useEffect(() => {
     localStorage.setItem('currentMenu', 'profile');
     getMyPosts();
+    stopLoading();
     // eslint-disable-next-line
   }, []);
 
@@ -88,6 +90,7 @@ Profile.propTypes = {
   post: PropTypes.object.isRequired,
   getMyPosts: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  stopLoading: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -95,4 +98,6 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, { getMyPosts, logout })(Profile);
+export default connect(mapStateToProps, { getMyPosts, logout, stopLoading })(
+  Profile
+);

@@ -501,6 +501,7 @@ main {
 
 .photo__header .photo__avatar {
   width: 32px;
+  height: 32px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -634,6 +635,7 @@ main {
 
 .profile__column:first-child img {
   width: 150px;
+  height: 150px;
   border-radius: 50%;
   transform-style: preserve-3d;
   transition: transform 0.5s linear;
@@ -679,15 +681,6 @@ main {
   background-color: #3f99ed;
   color: white;
   border-color: #3f99ed;
-}
-
-.profile__title i {
-  cursor: pointer;
-  transition: transform 1s ease-in;
-}
-
-.profile__title i:hover {
-  transform: rotate(2turn);
 }
 
 .profile__column .profile__stats {
@@ -1050,6 +1043,7 @@ body {
 
 .navigation__avatar {
   width: 25px;
+  height: 25px;
   border-radius: 50%;
 }
 
@@ -1166,6 +1160,7 @@ body {
 
 .navigation-notification .notifications li a img {
   width: 40px;
+  height: 40px;
 }
 
 .navigation-notification .notifications li a img:first-child {
@@ -1418,9 +1413,9 @@ body {
 
 .photo__comment .photo__avatar {
   width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-right: 10px;
-  padding: 5px 0;
 }
 
 .photo__comment .comment-time-ago {

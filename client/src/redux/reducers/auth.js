@@ -1,4 +1,5 @@
 import {
+  LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   CONFIRMATION_SUCCESS,
@@ -17,6 +18,7 @@ import {
   LOGOUT,
   LOADING_SEND_EMAIL,
   RESEND_EMAIL,
+  STOP_LOADING,
 } from '../types';
 
 const initialState = {
@@ -41,7 +43,6 @@ export default function (state = initialState, action) {
         loading2: false,
         user: payload,
       };
-    case REGISTER_SUCCESS:
     case CONFIRMATION_SUCCESS:
     case LOGIN_SUCCESS:
     case CHANGE_PASSWORD:
@@ -54,7 +55,6 @@ export default function (state = initialState, action) {
         loading2: false,
         error: null,
       };
-    case REGISTER_FAIL:
     case CONFIRMATION_FAIL:
     case LOGIN_FAIL:
     case AUTH_ERROR:
@@ -83,6 +83,7 @@ export default function (state = initialState, action) {
         loading: false,
         loading2: false,
       };
+    case LOADING:
     case LOADING_AVATAR:
     case LOADING_SEND_EMAIL:
       return {
@@ -98,6 +99,9 @@ export default function (state = initialState, action) {
       };
     case CHANGE_EMAIL:
     case RESEND_EMAIL:
+    case REGISTER_SUCCESS:
+    case REGISTER_FAIL:
+    case STOP_LOADING:
       return {
         ...state,
         loading: false,

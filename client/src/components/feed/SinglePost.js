@@ -78,15 +78,13 @@ const SinglePost = ({
                 <li className='photo__comment'>
                   <div>
                     <img
-                      src={`/uploads/avatars/${auth.user.avatar}`}
+                      src={`/uploads/avatars/${user.avatar}`}
                       alt='avatar'
                       className='photo__avatar'
                     />
                   </div>
                   <span>
-                    <span className='photo__comment-author'>
-                      {auth.user.name}
-                    </span>{' '}
+                    <span className='photo__comment-author'>{user.name}</span>{' '}
                     {text}
                     <span className='comment-time-ago'>
                       <Moment fromNow>{date}</Moment>

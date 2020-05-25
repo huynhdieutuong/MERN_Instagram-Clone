@@ -10,7 +10,7 @@ import { confirmationEmail } from '../../redux/actions/auth';
 
 const Confirmation = ({
   match,
-  auth: { loading, isAuthenticated, error },
+  auth: { loading, isAuthenticated, error, user },
   confirmationEmail,
 }) => {
   useEffect(() => {

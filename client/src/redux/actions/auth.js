@@ -20,6 +20,7 @@ import {
   CHANGE_EMAIL,
   RESEND_EMAIL,
   LOGOUT,
+  STOP_LOADING,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -49,7 +50,7 @@ export const register = (name, email, password) => async (dispatch) => {
   };
 
   try {
-    dispatch({ type: LOADING });
+    dispatch({ type: LOADING_SEND_EMAIL });
 
     const res = await axios.post(
       '/api/auth/register',
@@ -57,10 +58,9 @@ export const register = (name, email, password) => async (dispatch) => {
       config
     );
 
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: res.data,
-    });
+    dispatch({ type: REGISTER_SUCCESS });
+
+    return res.data.msg;
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -68,9 +68,7 @@ export const register = (name, email, password) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert('error', error.msg)));
     }
 
-    dispatch({
-      type: REGISTER_FAIL,
-    });
+    dispatch({ type: REGISTER_FAIL });
   }
 };
 
@@ -324,4 +322,9 @@ export const resendEmail = () => async (dispatch) => {
 
     dispatch({ type: RESEND_EMAIL });
   }
+};
+
+// Stop Loading
+export const stopLoading = () => (dispatch) => {
+  dispatch({ type: STOP_LOADING });
 };

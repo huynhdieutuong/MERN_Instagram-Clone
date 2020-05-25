@@ -9,17 +9,14 @@ import Logo from '../../images/loginLogo.png';
 import { setAlert } from '../../redux/actions/alerts';
 import { register } from '../../redux/actions/auth';
 
-const Register = ({
-  setAlert,
-  register,
-  auth: { loading, isAuthenticated },
-}) => {
+const Register = ({ setAlert, register, auth: { loading } }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   });
+  const [msg, setMsg] = useState(null);
 
   const { name, email, password, password2 } = formData;
 
@@ -27,13 +24,15 @@ const Register = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== password2) {
       setAlert('error', 'Password do not match');
     } else {
-      register(name, email, password);
+      const res = await register(name, email, password);
+
+      if (res) setMsg(res);
     }
   };
 
@@ -45,7 +44,7 @@ const Register = ({
           <div>
             <Spin />
           </div>
-        ) : !isAuthenticated ? (
+        ) : !msg ? (
           <form className='login__form' onSubmit={onSubmit}>
             <input
               type='text'
@@ -82,11 +81,7 @@ const Register = ({
             <input type='submit' value='Sign up' />
           </form>
         ) : (
-          <Alert
-            message='Register Success'
-            description={`A verification email has been sent to ${email}`}
-            type='success'
-          />
+          <Alert message='Register Success' description={msg} type='success' />
         )}
       </div>
       <div className='login__box'>

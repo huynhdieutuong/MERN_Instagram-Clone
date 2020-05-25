@@ -185,7 +185,7 @@ exports.resendEmail = async (req, res) => {
       'host'
     )}/confirmation/${token}</a>`;
 
-    const message = `<p>Hello ${user.name},</p><p>Please verify your account by clicking the link below:</p><p>${tokenUrl}</p>`;
+    const message = `<p>Hello ${req.user.name},</p><p>Please verify your account by clicking the link below:</p><p>${tokenUrl}</p>`;
 
     await sendEmail({
       email: req.user.email,

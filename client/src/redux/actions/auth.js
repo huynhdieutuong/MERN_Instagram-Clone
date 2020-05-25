@@ -14,9 +14,11 @@ import {
   AUTH_ERROR,
   UPDATE_AVATAR,
   LOADING_AVATAR,
+  LOADING_SEND_EMAIL,
   EDIT_PROFILE,
   CHANGE_PASSWORD,
   CHANGE_EMAIL,
+  RESEND_EMAIL,
   LOGOUT,
 } from '../types';
 
@@ -273,7 +275,7 @@ export const changePassword = (formData) => async (dispatch) => {
 
 // Change Email
 export const changeEmail = (formData) => async (dispatch) => {
-  dispatch({ type: LOADING_AVATAR });
+  dispatch({ type: LOADING_SEND_EMAIL });
 
   const config = {
     headers: {
@@ -301,4 +303,25 @@ export const changeEmail = (formData) => async (dispatch) => {
 // Logout
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
+};
+
+// Resend Email
+export const resendEmail = () => async (dispatch) => {
+  dispatch({ type: LOADING_SEND_EMAIL });
+
+  try {
+    const res = await axios.get('/api/auth/resend');
+
+    dispatch({ type: RESEND_EMAIL });
+
+    return res.data.msg;
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert('error', error.msg)));
+    }
+
+    dispatch({ type: RESEND_EMAIL });
+  }
 };

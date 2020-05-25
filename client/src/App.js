@@ -21,6 +21,7 @@ import SinglePost from './components/feed/SinglePost';
 import EditProfile from './components/profile/EditProfile';
 import ChangePassword from './components/profile/ChangePassword';
 import ChangeEmail from './components/profile/ChangeEmail';
+import NotVerify from './components/auth/NotVerify';
 import NotFound from './components/layout/NotFound';
 
 // Layout Routes
@@ -70,6 +71,7 @@ const App = () => {
             path='/change-email'
             component={ChangeEmail}
           />
+          <Route exact path='/not-verify' component={NotVerify} />
           <Route component={NotFound} />
         </Switch>
 

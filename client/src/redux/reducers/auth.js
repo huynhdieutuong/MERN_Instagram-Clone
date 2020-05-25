@@ -15,6 +15,8 @@ import {
   CHANGE_PASSWORD,
   CHANGE_EMAIL,
   LOGOUT,
+  LOADING_SEND_EMAIL,
+  RESEND_EMAIL,
 } from '../types';
 
 const initialState = {
@@ -82,6 +84,7 @@ export default function (state = initialState, action) {
         loading2: false,
       };
     case LOADING_AVATAR:
+    case LOADING_SEND_EMAIL:
       return {
         ...state,
         loading: true,
@@ -94,6 +97,7 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case CHANGE_EMAIL:
+    case RESEND_EMAIL:
       return {
         ...state,
         loading: false,

@@ -7,13 +7,15 @@ import EditProfileLayout from '../layout/EditProfileLayout';
 import Spinner from '../layout/Spinner';
 
 const EditProfileLayoutRoute = ({
-  auth: { loading2, isAuthenticated },
+  auth: { loading2, isAuthenticated, user },
   component: Component,
   ...rest
 }) => {
   if (loading2) return <Spinner />;
 
   if (!isAuthenticated) return <Redirect to='/login' />;
+
+  if (user && !user.isVerified) return <Redirect to='/not-verify' />;
 
   return (
     <Route

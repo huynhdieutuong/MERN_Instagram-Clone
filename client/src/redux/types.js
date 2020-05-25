@@ -1,5 +1,6 @@
 export const LOADING = 'LOADING';
 export const LOADING2 = 'LOADING2';
+export const LOADING_SEND_EMAIL = 'LOADING_SEND_EMAIL';
 export const LOADING_AVATAR = 'LOADING_AVATAR';
 
 // Alerts
@@ -21,6 +22,7 @@ export const UPDATE_AVATAR = 'UPDATE_AVATAR';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const CHANGE_EMAIL = 'CHANGE_EMAIL';
+export const RESEND_EMAIL = 'RESEND_EMAIL';
 export const LOGOUT = 'LOGOUT';
 
 // Post

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Spin, Alert } from 'antd';
+import { Result, Button } from 'antd';
+import { Link } from 'react-router-dom';
+
+import Spinner from '../layout/Spinner';
 
 import { confirmationEmail } from '../../redux/actions/auth';
 
@@ -15,21 +18,32 @@ const Confirmation = ({
     // eslint-disable-next-line
   }, []);
 
+  if (loading) return <Spinner />;
+
   return (
     <main id='login'>
-      <div className='login__column'>
-        {loading ? (
-          <Spin />
-        ) : isAuthenticated ? (
-          <Alert
-            message='Success Confirmation Email'
-            description='Success confirmation email. You can login to upload your photos.'
-            type='success'
-          />
-        ) : (
-          <Alert message='Error' description={error} type='error' />
-        )}
-      </div>
+      {isAuthenticated ? (
+        <Result
+          status='success'
+          title='Success Confirmation Email'
+          subTitle='Success confirmation email. Now you can upload your photos.'
+          extra={
+            <Link to='/'>
+              <Button type='primary'>Go to Feeds</Button>
+            </Link>
+          }
+        />
+      ) : (
+        <Result
+          status='warning'
+          title={error}
+          extra={
+            <Link to='/not-verify'>
+              <Button type='primary'>Get New Token</Button>
+            </Link>
+          }
+        />
+      )}
     </main>
   );
 };

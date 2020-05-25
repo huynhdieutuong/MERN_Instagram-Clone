@@ -12,6 +12,48 @@ This is a MERN stack application. It is a small social network app that includes
 
 ---
 
+# Functionality
+
+## Auth
+
+- Register user (Send email to verify)
+- Confirmation email (Verify email)
+- Login user
+- Get logged in user
+- Resend email to verify (If user miss email to verify)
+- Forgot password (Send email to reset password)
+- Reset password
+- Prevent access Profile, Posts if not verify email
+
+## Profile
+
+- Update info
+- Change password (Require current password)
+- Change email (Require current password & send email to verify)
+- Update avatar
+
+## Posts
+
+- Create post (upload photo)
+- Get posts
+- Get single post
+- Delete post (if owner)
+- Like & Unlike post
+- Comment post
+- Delete comment post (if owner)
+- Get all posts of user logged in
+- Get posts by user ID
+
+## Notifications
+
+- Get notifications when friends like or comment
+- Mark read & unread notification
+- Clear notification
+- Mark all as read notifications
+- Clear all notifications
+
+---
+
 # Quick Start
 
 ### Add a default.json file in config folder with the following

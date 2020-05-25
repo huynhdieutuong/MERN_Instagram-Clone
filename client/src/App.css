@@ -1454,7 +1454,8 @@ body {
   color: #262626;
 }
 
-.edit-profile__menu .active {
+.edit-profile__menu .active,
+.edit-profile__menu .active:hover {
   font-weight: 500;
   border-left-color: #262626;
 }

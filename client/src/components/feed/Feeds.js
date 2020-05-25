@@ -9,6 +9,7 @@ import CreatePost from './CreatePost';
 
 const Feeds = ({ post: { loading, posts }, getPosts }) => {
   useEffect(() => {
+    localStorage.setItem('currentMenu', 'feeds');
     getPosts();
     // eslint-disable-next-line
   }, []);

@@ -19,15 +19,15 @@ const Navbar = ({
     // eslint-disable-next-line
   }, []);
 
+  const [current, setCurrent] = useState(localStorage.getItem('currentMenu'));
   const [toggleNotifications, setToggle] = useState(false);
-  const [current, setCurrent] = useState(
-    localStorage.getItem('currentMenu', '')
-  );
 
   const onChangeCurrent = (name) => {
-    localStorage.setItem('currentMenu', name);
     setCurrent(name);
     if (name === 'notification') {
+      if (current === 'notification') {
+        setCurrent('feeds');
+      }
       setToggle(!toggleNotifications);
     } else {
       setToggle(false);
@@ -46,7 +46,10 @@ const Navbar = ({
 
   return (
     <nav className='navigation'>
-      <div className='navigation__column' onClick={() => onChangeCurrent('')}>
+      <div
+        className='navigation__column'
+        onClick={() => onChangeCurrent('feeds')}
+      >
         <Link to='/'>
           <img src={Logo} alt='Logo' />
         </Link>

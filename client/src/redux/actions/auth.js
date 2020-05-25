@@ -17,6 +17,7 @@ import {
   EDIT_PROFILE,
   CHANGE_PASSWORD,
   CHANGE_EMAIL,
+  LOGOUT,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -295,4 +296,9 @@ export const changeEmail = (formData) => async (dispatch) => {
 
     dispatch({ type: CHANGE_EMAIL });
   }
+};
+
+// Logout
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

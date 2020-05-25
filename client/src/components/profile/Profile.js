@@ -2,20 +2,23 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Spin } from 'antd';
+import { Spin, Popconfirm } from 'antd';
 
 import ProfilePhotos from './ProfilePhotos';
 import ProfileNoPost from './ProfileNoPost';
 import ChangeAvatar from './ChangeAvatar';
 
 import { getMyPosts } from '../../redux/actions/post';
+import { logout } from '../../redux/actions/auth';
 
 const Profile = ({
   auth: { user },
   post: { loading, myposts },
   getMyPosts,
+  logout,
 }) => {
   useEffect(() => {
+    localStorage.setItem('currentMenu', 'profile');
     getMyPosts();
     // eslint-disable-next-line
   }, []);
@@ -39,6 +42,16 @@ const Profile = ({
             >
               Edit profile
             </Link>
+            <Popconfirm
+              title='Are you sure logout?'
+              onConfirm={() => logout()}
+              okText='Yes'
+              cancelText='No'
+            >
+              <Link to='#!'>
+                <i className='fas fa-sign-out-alt'></i> Logout
+              </Link>
+            </Popconfirm>
           </div>
           <ul className='profile__stats'>
             <li className='profile__stat'>
@@ -74,6 +87,7 @@ Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   getMyPosts: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -81,4 +95,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, { getMyPosts })(Profile);
+export default connect(mapStateToProps, { getMyPosts, logout })(Profile);

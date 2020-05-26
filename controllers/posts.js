@@ -143,6 +143,9 @@ exports.deletePost = async (req, res) => {
 
     await post.remove();
 
+    // Also delete notifications of this post
+    await Notification.deleteMany({ post: req.params.id });
+
     res.json({ msg: 'Post removed' });
   } catch (err) {
     console.error(err.message);

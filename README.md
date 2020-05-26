@@ -6,9 +6,9 @@ This is a MERN stack application. It is a small social network app that includes
 
 ## Demo Live
 
-### The App is live at [Heroku.com](https://tuong-instagram.herokuapp.com/)
+### The App is live at [Netlify.com](https://tuong-instagram.netlify.app)
 
-### The API is live at [getpostman.com](https://documenter.getpostman.com/view/6870044/Szt5gXEP?version=latest)
+### The API is live at [Heroku.com](https://be-instagram.herokuapp.com)
 
 ---
 

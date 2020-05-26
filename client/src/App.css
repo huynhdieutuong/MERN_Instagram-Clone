@@ -508,7 +508,7 @@ main {
 
 .photo .photo__user-info {
   flex-grow: 1;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .photo .photo__user-info .photo__author {
@@ -526,7 +526,7 @@ main {
 }
 
 .photo__actions {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   font-size: 115%;
   padding: 0px 20px;
 }
@@ -545,7 +545,7 @@ main {
 
 .photo .photo__likes {
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: block;
   padding: 0px 20px;
 }
@@ -600,7 +600,7 @@ main {
 }
 
 .photo__comment {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .photo__comments .photo__comment-author {
@@ -671,7 +671,7 @@ main {
   text-decoration: none;
   color: inherit;
   font-weight: 600;
-  padding: 5px 25px;
+  padding: 10px 25px;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
@@ -1035,6 +1035,11 @@ main {
   font-size: 18px;
 }
 
+.no-post .right h2,
+.no-post .right p {
+  margin-bottom: 10px;
+}
+
 html,
 #root,
 body {
@@ -1373,7 +1378,7 @@ body {
 .single-post .column-info .photo__info .photo__likes,
 .single-post .column-info .photo__info .photo__time-ago {
   margin-top: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .single-post .column-info .photo__info .photo__add-comment-container {
@@ -1418,6 +1423,7 @@ body {
   font-size: 10px;
   color: #999;
   display: block;
+  margin-top: 5px;
 }
 
 .photo__header .photo__user-info {

@@ -8,7 +8,7 @@ This is a MERN stack application. It is a small social network app that includes
 
 ### The App is live at [Netlify.com](https://tuong-instagram.netlify.app)
 
-### The API is live at [Heroku.com](https://be-instagram.herokuapp.com)
+### The API is live at [Swagger.io](https://app.swaggerhub.com/apis-docs/huynhdieutuong/instagram-clone/1.0)
 
 ---
 
